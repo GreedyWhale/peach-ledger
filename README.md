@@ -1,24 +1,7 @@
-# README
+# 桃子记账项目
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Todo
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. 部署
+  
+    参考diary-of-madao新开一个nginx容器

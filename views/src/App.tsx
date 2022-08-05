@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { Welcome } from '~/pages/Welcome';
 import { Layout } from '~/pages/Layout';
@@ -9,7 +9,8 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Navigate to='/welcome' replace />} />
+          <Route path='home' element={<Home />} />
         </Route>
         <Route path='/welcome' element={<Welcome />} />
       </Routes>

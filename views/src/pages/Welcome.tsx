@@ -18,7 +18,7 @@ export const Welcome: React.FC = () => {
     return contents[step];
   }, [step]);
 
-  const toHome = () => navigate('/', { replace: true });
+  const toHome = () => navigate('/home', { replace: true });
 
   return (
     <div className={styles.container}>

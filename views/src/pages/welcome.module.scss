@@ -6,8 +6,11 @@
 @include lightSpeedInRight;
 @include zoomInDown;
 
+$footerHeight: 120px;
+$pageHorizontalPadding: 40px;
+
 .container {
-  padding: 0 40px 60px;
+  padding: 0 $pageHorizontalPadding $footerHeight;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,6 +38,7 @@
     .page_contents {
       padding-top: 250px;
       display: flex;
+      align-items: center;
       justify-content: center;
       font-size: 40px;
       > span {
@@ -45,32 +49,31 @@
         letter-spacing: 10px;
       }
       &[data-step='1'] {
+        animation: bounceInDown 1s;
         > span {
           background: url('../assets/images/money.png') no-repeat center / 100%;
         }
-        animation: bounceInDown 1s;
       }
       &[data-step='2'] {
+        animation: flip .5s;
+        backface-visibility: visible;
         > span {
           background: url('../assets/images/gauge.png') no-repeat center / 100%;
           margin-right: 40px;
         }
-        animation: flip .5s;
-        backface-visibility: visible;
       }
       &[data-step='3'] {
-        align-items: center;
+        animation: lightSpeedInRight 1s ease-out;
         > span {
           background: url('../assets/images/chart.png') no-repeat center / 100%;
           margin-right: 40px;
         }
-        animation: lightSpeedInRight 1s ease-out;
       }
       &[data-step='4'] {
+        animation: zoomInDown 1s;
         > span {
           background: url('../assets/images/globe.png') no-repeat center / 100%;
         }
-        animation: zoomInDown 1s;
       }
     }
   }
@@ -80,10 +83,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0 40px;
+    height: $footerHeight;
+    padding: 0 $pageHorizontalPadding;
     > button {
       @include resetButton;
       font-weight: 500;
       font-size: 32px;
+      color: #333;
     }
     .to_home {
       flex: 1;

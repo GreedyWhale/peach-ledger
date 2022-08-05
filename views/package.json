@@ -24,6 +24,7 @@
     "eslint-config-xo": "^0.41.0",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss-px-to-viewport-8-plugin": "^1.1.5",
     "sass": "^1.54.2",
     "typescript": "^4.6.4",
     "vite": "^3.0.0"

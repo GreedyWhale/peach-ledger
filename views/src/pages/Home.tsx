@@ -1,7 +1,12 @@
+import { Icon } from '~/components/Icon';
+
 export const Home = () => {
   console.log(1);
 
   return (
-    <div>home</div>
+    <div>
+      123123
+      <Icon icon='add' />
+    </div>
   );
 };

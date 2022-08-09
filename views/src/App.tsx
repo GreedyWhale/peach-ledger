@@ -6,7 +6,11 @@ import { Welcome } from '~/pages/Welcome';
 import { Layout } from '~/pages/Layout';
 import { Home } from '~/pages/Home';
 
+import useIcon from '~/hooks/useIcon';
+
 function App() {
+  useIcon();
+
   return (
     <div>
       <Routes>

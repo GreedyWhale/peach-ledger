@@ -4,3 +4,17 @@
   background: none;
   outline: none;
 }
+
+@mixin zIndex ($level) {
+  $levelMap: (
+    wallpaper: -1,
+    overlay: 1,
+    popover: 2,
+    affix: 3,
+    toast: 4,
+    nav: 5,
+    dialog: 6,
+  );
+
+  z-index: map-get($levelMap, $level);
+}

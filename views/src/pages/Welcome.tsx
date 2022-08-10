@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './welcome.module.scss';
+import styles from './Welcome.module.scss';
 import { Icon, IconProps } from '~/components/Icon';
 
 import useSwipe from '~/hooks/useSwipe';

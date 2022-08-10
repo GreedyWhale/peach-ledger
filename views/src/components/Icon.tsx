@@ -1,9 +1,9 @@
 import React from 'react';
 
-import styles from './icon.module.scss';
+import styles from './Icon.module.scss';
 
 export interface IconProps {
-  icon: 'add' | 'button_loading' | 'chart' | 'dashboard' | 'global' | 'logo' | 'money';
+  icon: 'add' | 'chart' | 'dashboard' | 'global' | 'logo' | 'money' | 'menu' | 'arrowLeft';
   className?: string;
 }
 

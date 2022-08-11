@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './Icon.module.scss';
 
 export interface IconProps {
-  icon: 'add' | 'chart' | 'dashboard' | 'global' | 'logo' | 'money' | 'menu' | 'arrowLeft';
+  icon: 'add' | 'chart' | 'dashboard' | 'global' | 'logo' | 'money' | 'menu' | 'arrowLeft' | 'buttonLoading' | '';
   className?: string;
 }
 

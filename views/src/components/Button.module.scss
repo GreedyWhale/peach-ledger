@@ -1,0 +1,44 @@
+@import '~/assets/styles/tools.scss';
+@import '~/assets/styles/animate.scss';
+
+@include rotate;
+
+.container {
+  width: 100%;
+  font-size: 24px;
+  color: #fff;
+  .inner {
+    @include resetButton;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    padding: 0.75em 1em;
+    border-radius: 8px;
+    .loadingIcon {
+      margin-right: 0.5em;
+      width: 1em;
+      height: 1em;
+      animation: rotate 0.75s linear infinite forwards;
+    }
+  }
+
+  &[data-ghost='true'] {
+    color: #000;
+    .inner {
+      background: #fff;
+      border: 1px solid #000;
+    }
+  }
+
+  &[data-disabled='true'] {
+    color: #807e7e;
+    .inner {
+      background: #F2F2F2;
+      pointer-events: none;
+      border-color: #807e7e;
+    }
+  }
+}

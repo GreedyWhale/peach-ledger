@@ -1,0 +1,78 @@
+@import '~/assets/styles/tools.scss';
+
+.container {
+  position: fixed;
+  top: var(--navigation-bar-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @include zIndex(sidebar);
+  height: calc(100vh - var(--navigation-bar-height));
+  width: 100%;
+  .mask {
+    position: absolute;
+    @include zIndex(wallpaper);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.1s;
+    &[data-animate="true"] {
+      opacity: 1;
+    }
+  }
+
+  main {
+    width: 70%;
+    background: #fff;
+    height: 100%;
+
+    .user_profile {
+      background: #F4F4F4;
+      margin-bottom: 60px;
+      padding: 40px 20px;
+      > h2 {
+        font-size: 40px;
+        margin-bottom: 25px;
+      }
+      > p {
+        font-size: 28px;
+      }
+    }
+
+    ul {
+      > li {
+        display: flex;
+        align-items: center;
+        font-size: 32px;
+        margin-bottom: 30px;
+        padding-left: 25px;
+        svg {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}
+
+.sidebar_animate {
+  &_appear {
+    opacity: 0;
+  }
+  &_enter {
+    transform: translateX(-100%);
+  }
+  &_enter_active {
+    transform: translateX(0);
+    transition: transform 200ms;
+  }
+  &_exit {
+    transform: translateX(0);
+  }
+  &_exit_active {
+    transform: translateX(-100%);
+    transition: transform 200ms;
+  }
+}

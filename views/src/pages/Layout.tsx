@@ -6,12 +6,12 @@ import { NavigationBar } from '~/components/NavigationBar';
 import { Sidebar } from '~/components/Sidebar';
 
 export const Layout: React.FC = () => {
-  const [visibleSidebar, setVisibleSidebar] = React.useState(false);
+  const [sidebarVisible, setSidebarVisible] = React.useState(false);
 
   return (
     <div className={styles.layout}>
-      <NavigationBar onClickMenu={() => setVisibleSidebar(prev => !prev)}/>
-      <Sidebar visible={visibleSidebar} onMaskClick={() => setVisibleSidebar(false)} />
+      <NavigationBar onClickMenu={() => setSidebarVisible(prev => !prev)}/>
+      <Sidebar visible={sidebarVisible} onMaskClick={() => setSidebarVisible(false)} />
       <Outlet />
     </div>
   );

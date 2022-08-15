@@ -4,7 +4,7 @@ import request from '~/utils/request';
 
 import { apiEmojis } from './api';
 
-type GetEmojisResponse = Record<'Activities'
+export type GetEmojisResponse = Record<'Activities'
 | 'Animals & Nature'
 | 'Component'
 | 'Flags'

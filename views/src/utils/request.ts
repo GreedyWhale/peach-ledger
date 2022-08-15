@@ -3,6 +3,7 @@ import type { Response } from '~/types/request';
 import axios, { AxiosError } from 'axios';
 
 import { REQUEST_CODE_NO_RESPONSE, REQUEST_CODE_CODE_ERROR } from '~/utils/constants';
+import { showDialog } from '~/components/Dialog';
 
 const axiosInstance = axios.create({
   baseURL: 'http://127.0.0.1:3000',
@@ -54,7 +55,7 @@ axiosInstance.interceptors.response.use(response => ({
   }
 
   if (error.config.showErrorDialog) {
-    console.log(result.message);
+    showDialog({ content: result.message });
   }
 
   return result;

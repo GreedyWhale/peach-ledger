@@ -37,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = props => {
         <main>
           <div className={styles.user_profile}>
             <h2>未登录用户</h2>
-            <p>{getEmoji('rightFinger')} 点击这里登录</p>
+            <p>{getEmoji('People & Body', 19)} 点击这里登录</p>
           </div>
           <ul>
             <li><Icon icon='sidebar_chart'/> 统计图表</li>

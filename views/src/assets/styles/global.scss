@@ -1,7 +1,7 @@
 @import './var.scss';
 
 :root {
-  --navigation-bar-height: 90px;
+  --navigation-bar-height: 120px;
 
   --theme-bg: #{$theme-bg};
   --theme-main-color: #{$theme-main-color};
@@ -16,7 +16,7 @@
 body {
   font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
   color: var(--theme-font-color);
-  font-size: 16px;
+  font-size: 24px;
   background: var(--theme-bg);
 }
 

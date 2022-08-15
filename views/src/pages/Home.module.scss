@@ -21,8 +21,7 @@
     bottom: 150px;
     width: 100px;
     height: 100px;
-    > button {
-      border-radius: 50%;
-    }
+    border-radius: 50%;
+    color: var(--theme-pink);
   }
 }

@@ -1,9 +1,23 @@
 @import './var.scss';
 
+:root {
+  --navigation-bar-height: 90px;
+
+  --theme-bg: #{$theme-bg};
+  --theme-main-color: #{$theme-main-color};
+  --theme-font-color: #{$theme-font-color};
+  --theme-secondary-color: #{$theme-secondary-color};
+  --theme-purple: #{$theme-purple};
+  --theme-blue: #{$theme-blue};
+  --theme-blue-light: #{$theme-blue-light};
+  --theme-pink: #{$theme-pink};
+}
+
 body {
   font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
-  color: #333;
+  color: var(--theme-font-color);
   font-size: 16px;
+  background: var(--theme-bg);
 }
 
 button:active {

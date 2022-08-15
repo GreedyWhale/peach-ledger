@@ -1,4 +1,5 @@
 @import '~/assets/styles/tools.scss';
+@import '~/assets/styles/var.scss';
 
 .container {
   position: fixed;
@@ -26,13 +27,13 @@
 
   main {
     width: 70%;
-    background: #fff;
+    background: lighten($color: $theme-main-color, $amount: 10%);
     height: 100%;
 
     .user_profile {
-      background: #F4F4F4;
+      background: var(--theme-main-color);
       margin-bottom: 60px;
-      padding: 40px 20px;
+      padding: 60px 20px;
       > h2 {
         font-size: 40px;
         margin-bottom: 25px;
@@ -47,7 +48,7 @@
         display: flex;
         align-items: center;
         font-size: 32px;
-        margin-bottom: 30px;
+        margin-bottom: 60px;
         padding-left: 25px;
         svg {
           margin-right: 20px;

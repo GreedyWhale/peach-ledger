@@ -20,15 +20,13 @@ $pageHorizontalPadding: 40px;
     padding-top: 80px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 120px;
+    align-items: flex-start;
     .logo {
       width: 120px;
       height: 120px;
       margin-bottom: 20px;
     }
     > h1 {
-      writing-mode: vertical-rl;
       font-size: 32px;
       letter-spacing: 0.2em;
     }
@@ -82,7 +80,7 @@ $pageHorizontalPadding: 40px;
       @include resetButton;
       font-weight: 500;
       font-size: 32px;
-      color: #333;
+      color: var(--theme-secondary-color);
     }
     .to_home {
       flex: 1;

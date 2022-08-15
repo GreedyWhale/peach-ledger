@@ -10,7 +10,7 @@ export const Home = () => {
     <div className={styles.container}>
       <Icon icon='logo' className={styles.logo} />
       <Button className={styles.start_button}>开始记账</Button>
-      <Button className={styles.float_button}><Icon icon='add'/></Button>
+      <Icon icon='add'className={styles.float_button}/>
     </div>
   );
 };

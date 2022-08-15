@@ -35,5 +35,7 @@ module PeachLedger
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    # 开启gzip
+    config.middleware.use Rack::Deflater
   end
 end

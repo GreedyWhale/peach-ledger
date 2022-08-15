@@ -4,12 +4,15 @@ import { CSSTransition } from 'react-transition-group';
 import styles from './Sidebar.module.scss';
 import { Icon } from '~/components/Icon';
 
+import useEmoji from '~/hooks/useEmoji';
+
 interface SidebarProps {
   visible: boolean;
   onMaskClick?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = props => {
+  const { getEmoji } = useEmoji();
   const CSSTransitionRef = React.useRef(null);
   const [maskAnimation, setMaskAnimation] = React.useState(false);
 
@@ -34,7 +37,7 @@ export const Sidebar: React.FC<SidebarProps> = props => {
         <main>
           <div className={styles.user_profile}>
             <h2>未登录用户</h2>
-            <p>👉 点击这里登录</p>
+            <p>{getEmoji('rightFinger')} 点击这里登录</p>
           </div>
           <ul>
             <li><Icon icon='sidebar_chart'/> 统计图表</li>

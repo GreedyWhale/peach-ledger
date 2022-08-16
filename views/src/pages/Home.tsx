@@ -1,16 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Home.module.scss';
 import { Icon } from '~/components/Icon';
 import { Button } from '~/components/Button';
 
 export const Home = () => {
-  console.log(1);
+  const navigate = useNavigate();
+
+  const toItemCreatePage = () => navigate('/item');
 
   return (
     <div className={styles.container}>
       <Icon icon='logo' className={styles.logo} />
-      <Button className={styles.start_button}>开始记账</Button>
-      <Icon icon='add'className={styles.float_button}/>
+      <Button className={styles.start_button} onClick={async () => toItemCreatePage()}>开始记账</Button>
+      <Icon icon='add'className={styles.float_button} onClick={toItemCreatePage} />
     </div>
   );
 };

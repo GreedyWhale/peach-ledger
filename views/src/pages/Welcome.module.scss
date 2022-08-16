@@ -80,7 +80,7 @@ $pageHorizontalPadding: 40px;
       @include resetButton;
       font-weight: 500;
       font-size: 32px;
-      color: var(--theme-secondary-color);
+      color: var(--theme-font-color);
     }
     .to_home {
       flex: 1;

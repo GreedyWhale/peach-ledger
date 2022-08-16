@@ -2,4 +2,9 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  .menu_icon {
+    width: 70px;
+    height: 70px;
+    color: var(--theme-cherry);
+  }
 }

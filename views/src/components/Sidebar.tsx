@@ -40,9 +40,9 @@ export const Sidebar: React.FC<SidebarProps> = props => {
             <p>{getEmoji('People & Body', 19)} 点击这里登录</p>
           </div>
           <ul>
-            <li><Icon icon='sidebar_chart'/> 统计图表</li>
-            <li><Icon icon='sidebar_export'/> 导出数据</li>
-            <li><Icon icon='sidebar_notify'/> 记账提醒</li>
+            <li><Icon icon='sidebarChart'/> 统计图表</li>
+            <li><Icon icon='sidebarExport'/> 导出数据</li>
+            <li><Icon icon='sidebarNotify'/> 记账提醒</li>
           </ul>
         </main>
       </div>

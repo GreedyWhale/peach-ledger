@@ -19,17 +19,17 @@
     border-radius: 8px;
     .loadingIcon {
       margin-right: 0.5em;
-      width: 1em;
-      height: 1em;
+      width: 1.5em;
+      height: 1.5em;
       animation: rotate 0.75s linear infinite forwards;
     }
   }
 
   &[data-ghost='true'] {
-    color: var(--theme-purple);
+    color: var(--theme-cherry);
     .inner {
       background: transparent;
-      border: 2px solid var(--theme-purple);
+      border: 2px solid var(--theme-cherry);
     }
   }
 

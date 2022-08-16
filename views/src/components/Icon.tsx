@@ -12,9 +12,10 @@ export interface IconProps {
   | 'menu'
   | 'arrowLeft'
   | 'buttonLoading'
-  | 'sidebar_chart'
-  | 'sidebar_export'
-  | 'sidebar_notify';
+  | 'sidebarChart'
+  | 'sidebarExport'
+  | 'sidebarNotify'
+  | 'date';
   className?: string;
   onClick?: () => void;
 }

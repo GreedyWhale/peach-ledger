@@ -16,6 +16,7 @@ interface Store {
 
 interface TabsProps {
   activeKey: TabsItem['key'];
+  className?: string;
 }
 
 interface TabPaneProps {
@@ -53,7 +54,7 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = props => {
   }, [props.activeKey, setActiveKey]);
 
   return (
-    <div className={styles.container}>
+    <div className={[styles.container, props.className || ''].join(' ')}>
       <ul className={styles.tabs}>
         {tabs.map(value => (
           <li

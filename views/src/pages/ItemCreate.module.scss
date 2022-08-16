@@ -1,0 +1,61 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  .tabs {
+    flex: 1;
+  }
+  .calculator {
+    flex: none;
+    &_screen {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2em;
+      height: 4em;
+      margin-bottom: 2px;
+      background: var(--theme-main-color);
+      > div {
+        display: flex;
+        align-items: center;
+      }
+    }
+    &_date_icon {
+      margin-right: 20px;
+    }
+    &_value {
+      font-weight: bold;
+      color: var(--theme-cherry);
+      font-size: 32px;
+    }
+    &_panel {
+      > ol {
+        display: grid;
+        grid-template-areas:
+          'n1 n2 n3 nDel'
+          'n4 n5 n6 nClear'
+          'n7 n8 n9 nSubmit'
+          'n0 n0 nd nSubmit';
+        gap: 2px;
+        > li {
+          background: var(--theme-main-color);
+          padding: 1.5em 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:nth-child(4),
+          &:nth-child(8),
+          &:nth-child(12) {
+            background: var(--theme-cherry);
+          }
+          &:nth-child(12) {
+            grid-area: nSubmit;
+          }
+          &:nth-child(13) {
+            grid-area: n0;
+          }
+        }
+      }
+    }
+  }
+}

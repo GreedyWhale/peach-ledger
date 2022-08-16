@@ -5,6 +5,7 @@ import '~/assets/images/icons.svg';
 import { Welcome } from '~/pages/Welcome';
 import { Layout } from '~/pages/Layout';
 import { Home } from '~/pages/Home';
+import { ItemCreate } from '~/pages/ItemCreate';
 
 import useIcon from '~/hooks/useIcon';
 
@@ -16,6 +17,9 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path='/home' element={<Home />} />
+          <Route path='/item'>
+            <Route index element={<ItemCreate />} />
+          </Route>
         </Route>
         <Route path='/welcome' element={<Welcome />} />
         <Route path='*' element={<Navigate to='/welcome' replace />} />

@@ -9,7 +9,7 @@ export default function useEmoji() {
 
   const getEmoji = React.useCallback((key: keyof GetEmojisResponse, index: number) => {
     if (emojis) {
-      return String.fromCodePoint(parseInt(emojis.data[key][index][0], 16));
+      return emojis.data[key][index].reduce((prev, current) => prev + String.fromCodePoint(parseInt(current, 16)), '');
     }
 
     return '';

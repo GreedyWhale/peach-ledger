@@ -11,7 +11,7 @@ function emojiCrawler() {
       // 浏览器不能显示U+开头的unicode
       // 要么转换成'\u{1F64D}'这种形式
       // 要么使用 String.fromCodePoint(parseInt('1F64D', 16))
-      emoji = emoji.replace(/^U\+/gi, '').split(' ');
+      emoji = emoji.replace(/\bU\+/gi, '').split(' ');
       result[key].push(emoji);
     }
   });

@@ -1,0 +1,28 @@
+@import '../assets/styles/var.scss';
+
+.container {
+  width: 100%;
+  background: $theme-main-color;
+  border-radius: 8px;
+  padding: 0 40px;
+  overflow: hidden;
+  box-shadow: 0 -4px 25px 2px darken($color: $theme-secondary-color, $amount: 50%);
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    font-size: 32px;
+    font-weight: bold;
+    .triangle {
+      width: 20px;
+      height: 20px;
+      color: var(--theme-cherry);
+      transition: transform 0.2s ease-out;
+    }
+  }
+  main {
+    height: 0;
+    transition: height 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}

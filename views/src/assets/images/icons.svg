@@ -218,4 +218,10 @@
       </g>
     </g>
   </symbol>
+  <symbol stroke-miterlimit="10" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsVectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" id="triangle">
+    <defs></defs>
+    <g id="图层-1" vectornatorLayerName="图层 1">
+      <path d="M25.2444 79.6719C16.8363 79.6719 10 86.245 10 94.3356L226.998 405.541C235.406 418.292 244.503 420.382 250.867 420.382C250.867 420.382 264.091 419.414 273.768 405.541L490 94.3047C489.977 86.1831 483.125 79.6719 474.701 79.6177L25.2444 79.6719Z" fill="currentColor" fill-rule="nonzero" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="12"></path>
+    </g>
+  </symbol>
 </svg>

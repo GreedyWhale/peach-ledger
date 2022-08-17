@@ -36,3 +36,7 @@ export const getDateList = (year: number, month: number) => {
   return result;
 };
 
+export const formatDate = (date = new Date()) => 'YYYY/MM/DD'
+  .replace(/YYYY/g, `${date.getFullYear()}`)
+  .replace(/MM/g, `${date.getMonth() + 1}`)
+  .replace(/DD/g, `${date.getDate()}`);

@@ -39,7 +39,7 @@ export const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = props 
   }, [expand]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-expanded={expand}>
       <header onClick={handleClick}>
         <span>{props.title}</span>
         <Icon icon='triangle' className={styles.triangle} />

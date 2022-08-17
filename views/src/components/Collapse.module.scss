@@ -18,11 +18,18 @@
       width: 20px;
       height: 20px;
       color: var(--theme-cherry);
-      transition: transform 0.2s ease-out;
+      transition: transform 0.2s ease-in-out;
     }
   }
   main {
     height: 0;
     transition: height 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  &[data-expanded="true"] {
+    header {
+      .triangle {
+        transform: rotate(180deg);
+      }
+    }
   }
 }

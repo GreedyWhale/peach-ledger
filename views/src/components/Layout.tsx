@@ -18,6 +18,7 @@ export const Layout: React.FC = () => {
     const defaultTitle = `桃子记账 ${getEmoji('Food & Drink', 11)}`;
     const titleMap: Record<string, string> = {
       '/item': '记一笔',
+      '/tag/create': '创建标签',
     };
 
     return {

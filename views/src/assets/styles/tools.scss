@@ -1,6 +1,14 @@
-
 @mixin resetButton {
   border: none;
+  background: none;
+  outline: none;
+  font-size: inherit;
+  color: inherit;
+}
+
+@mixin resetInput {
+  border: none;
+  border-radius: 0;
   background: none;
   outline: none;
   font-size: inherit;

@@ -8,20 +8,20 @@ interface ButtonProps {
   loading?: boolean;
   ghost?: boolean;
   disabled?: boolean;
-  onClick?: () => Promise<any>;
+  onClick?: (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<any>;
 }
 
 export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = props => {
   const [loading, setLoading] = React.useState(props.loading);
 
-  const handleClick = async () => {
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (loading || props.disabled) {
       return;
     }
 
     if (props.onClick) {
       setLoading(true);
-      await props.onClick().catch(error => console.error(error));
+      await props.onClick(event).catch(error => console.error(error));
       setLoading(false);
     }
   };

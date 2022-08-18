@@ -31,5 +31,12 @@
       color: var(--theme-orange);
       font-weight: bold;
     }
+    .buttons {
+      display: flex;
+      align-items: center;
+      > .margin_right_20 {
+        margin-right: 20px;
+      }
+    }
   }
 }

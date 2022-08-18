@@ -1,5 +1,3 @@
-import { Rules, validator } from '~/utils/validator';
-
 import React from 'react';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
@@ -10,6 +8,7 @@ import { EmojiSelector } from '~/components/EmojiSelector';
 import { Button } from '~/components/Button';
 
 import { showEmoji } from '~/hooks/useEmoji';
+import { Rules, validator } from '~/utils/validator';
 
 type Errors = Partial<Record<'name' | 'sign', string[]>>;
 
@@ -21,6 +20,10 @@ interface Store {
   setSign: (_sign: string[]) => void;
   setName: (_name: string) => void;
   updateErrors: (_errors: Errors) => void;
+}
+
+interface TagLayoutProps {
+  pageType: 'create' | 'edit'
 }
 
 const formRules: Rules<Pick<Store, 'name' | 'sign'>> = [
@@ -58,7 +61,7 @@ const useStore = create<Store>()(
   ),
 );
 
-export const TagLayout: React.FC<React.PropsWithChildren> = () => {
+export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = props => {
   const { sign, name, errors } = useStore(state => ({
     sign: state.sign,
     name: state.name,
@@ -75,7 +78,7 @@ export const TagLayout: React.FC<React.PropsWithChildren> = () => {
       return;
     }
 
-    // TODO 创建逻辑
+    // TODO 创建 删除 更新逻辑
     console.log('go on');
   };
 
@@ -103,7 +106,13 @@ export const TagLayout: React.FC<React.PropsWithChildren> = () => {
         </div>
         <EmojiSelector onSelect={setSign} />
         <p className={styles.tip}>记账时长按标签，即可进行编辑</p>
-        <Button onClick={handleCreate}>创建</Button>
+        {props.pageType === 'create' && <Button onClick={handleCreate}>创建</Button>}
+        {props.pageType === 'edit' && (
+          <div className={styles.buttons}>
+            <Button onClick={handleCreate} className={styles.margin_right_20}>保存</Button>
+            <Button onClick={handleCreate} ghost>删除</Button>
+          </div>
+        )}
       </form>
     </div>
   );

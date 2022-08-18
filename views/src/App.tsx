@@ -7,6 +7,7 @@ import { Welcome } from '~/pages/Welcome';
 import { Home } from '~/pages/Home';
 import { ItemCreate } from '~/pages/ItemCreate';
 import { TagCreate } from '~/pages/TagCreate';
+import { TagUpdate } from '~/pages/TagUpdate';
 
 import useIcon from '~/hooks/useIcon';
 
@@ -22,6 +23,7 @@ function App() {
         </Route>
         <Route path='/tag'>
           <Route path='create' element={<TagCreate />} />
+          <Route path='update' element={<TagUpdate />} />
         </Route>
       </Route>
       <Route path='/welcome' element={<Welcome />} />

@@ -2,6 +2,6 @@ import React from 'react';
 
 import { TagLayout } from '~/components/TagLayout';
 
-export const TagCreate: React.FC = () => (
-  <TagLayout pageType='create' />
+export const TagUpdate: React.FC = () => (
+  <TagLayout pageType='edit' />
 );

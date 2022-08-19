@@ -1,0 +1,26 @@
+@import '~/assets/styles/tools.scss';
+
+.form_item {
+  margin-bottom: 40px;
+  label {
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  input {
+    @include resetInput;
+    border-bottom: 2px solid var(--theme-cherry);
+    flex: 1;
+    padding-bottom: 10px;
+    background: transparent;
+  }
+  span {
+    font-size: 32px;
+  }
+}
+.error_message {
+  color: var(--theme-orange);
+  font-weight: bold;
+}

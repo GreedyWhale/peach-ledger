@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { devtools } from 'zustand/middleware';
+import { devtools, subscribeWithSelector } from 'zustand/middleware';
 
 import styles from './TagLayout.module.scss';
-import { EmojiSelector } from '~/components/EmojiSelector';
+import { Form, FormItem } from '~/components/Form';
 import { Button } from '~/components/Button';
 
 import { showEmoji } from '~/hooks/useEmoji';
@@ -34,30 +34,32 @@ const formRules: Rules<Pick<Store, 'name' | 'sign'>> = [
 
 const useStore = create<Store>()(
   devtools(
-    immer(set => ({
-      sign: [],
-      name: '',
-      errors: {},
+    subscribeWithSelector(
+      immer(set => ({
+        sign: [],
+        name: '',
+        errors: {},
 
-      setSign: sign => set(state => {
-        state.sign = sign;
-      }),
+        setSign: sign => set(state => {
+          state.sign = sign;
+        }),
 
-      setName: name => set(state => {
-        // 为了修复移动端 input 在输入后全部删除导致 基线对齐错位问题
-        // @see https://stackoverflow.com/a/20847688
-        if (!name) {
-          state.name = ' ';
-          return;
-        }
+        setName: name => set(state => {
+          // 为了修复移动端 input 在输入后全部删除导致 基线对齐错位问题
+          // @see https://stackoverflow.com/a/20847688
+          if (!name) {
+            state.name = ' ';
+            return;
+          }
 
-        state.name = name;
-      }),
+          state.name = name;
+        }),
 
-      updateErrors: errors => set(state => {
-        Object.assign(state.errors, errors);
-      }),
-    })),
+        updateErrors: errors => set(state => {
+          Object.assign(state.errors, errors);
+        }),
+      })),
+    ),
   ),
 );
 
@@ -68,8 +70,16 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
     errors: state.errors,
   }));
   const { setSign, setName, updateErrors } = useStore.getState();
+  const unsubscribeName = useStore.subscribe(
+    state => state.name,
+    () => updateErrors({ name: [] }),
+  );
+  const unsubscribeSign = useStore.subscribe(
+    state => state.sign,
+    () => updateErrors({ sign: [] }),
+  );
 
-  const handleCreate = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleCreateTag = async (event: FormEvent) => {
     event.preventDefault();
     const errors = validator({ sign, name: name.trim() }, formRules);
 
@@ -82,38 +92,36 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
     console.log('go on');
   };
 
+  React.useEffect(() => unsubscribeName, [unsubscribeName]);
+  React.useEffect(() => unsubscribeSign, [unsubscribeSign]);
+
   return (
     <div className={styles.container}>
-      <form>
-        <div className={styles.form_item}>
-          <label>
-            标签名：
-            <input
-              type='text'
-              placeholder='2-4个字符'
-              maxLength={4}
-              value={name}
-              onChange={event => setName(event.target.value)}
-            />
-          </label>
-          <p className={styles.error_message}>{errors.name?.[0]}</p>
-        </div>
-        <div className={styles.form_item}>
-          <label>
-            符号：{sign && <span>{showEmoji(sign)}</span>}
-          </label>
-          <p className={styles.error_message}>{errors.sign?.[0]}</p>
-        </div>
-        <EmojiSelector onSelect={setSign} />
+      <Form>
+        <FormItem
+          type='text'
+          label='标签名：'
+          value={name}
+          onChange={event => setName(event.target.value)}
+          error={errors.name?.[0]}
+        />
+
+        <FormItem
+          type='emoji'
+          error={errors.sign?.[0]}
+          label={<>符号：{sign && <span>{showEmoji(sign)}</span>}</>}
+          onSelect={setSign}
+        />
+
         <p className={styles.tip}>记账时长按标签，即可进行编辑</p>
-        {props.pageType === 'create' && <Button onClick={handleCreate}>创建</Button>}
+        {props.pageType === 'create' && <Button onClick={handleCreateTag}>创建</Button>}
         {props.pageType === 'edit' && (
           <div className={styles.buttons}>
-            <Button onClick={handleCreate} className={styles.margin_right_20}>保存</Button>
-            <Button onClick={handleCreate} ghost>删除</Button>
+            <Button className={styles.margin_right_20}>保存</Button>
+            <Button ghost>删除</Button>
           </div>
         )}
-      </form>
+      </Form>
     </div>
   );
 };

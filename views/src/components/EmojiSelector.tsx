@@ -6,7 +6,7 @@ import styles from './EmojiSelector.module.scss';
 
 import useEmoji, { showEmoji } from '~/hooks/useEmoji';
 
-interface EmojiSelectorProps {
+export interface EmojiSelectorProps {
   onSelect: (_emoji: string[]) => void;
 }
 

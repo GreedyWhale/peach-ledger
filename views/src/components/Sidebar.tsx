@@ -1,5 +1,6 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { Link } from 'react-router-dom';
 
 import styles from './Sidebar.module.scss';
 import { Icon } from '~/components/Icon';
@@ -40,9 +41,10 @@ export const Sidebar: React.FC<SidebarProps> = props => {
             <p>{getEmoji('People & Body', 19)} 点击这里登录</p>
           </div>
           <ul>
-            <li><Icon icon='sidebarChart'/> 统计图表</li>
-            <li><Icon icon='sidebarExport'/> 导出数据</li>
-            <li><Icon icon='sidebarNotify'/> 记账提醒</li>
+            <li><Link to='/item'><Icon icon='sidebarSummary'/> 数据总览</Link></li>
+            <li><Link to='/tag/create'><Icon icon='sidebarChart'/> 统计图表</Link></li>
+            <li><Link to='/tag/update'><Icon icon='sidebarExport'/> 导出数据</Link></li>
+            <li><Link to='/item'><Icon icon='sidebarNotify'/> 记账提醒</Link></li>
           </ul>
         </main>
       </div>

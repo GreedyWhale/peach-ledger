@@ -1,0 +1,68 @@
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  margin: 20px 32px;
+  background: var(--theme-main-color);
+  border-radius: 8px;
+  > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &:nth-child(1) {
+      color: var(--theme-orange);
+    }
+    &:nth-child(2) {
+      color: var(--theme-green);
+    }
+    > span {
+      &:nth-child(1) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.items {
+  margin-bottom: 80px;
+  max-height: 600px;
+  overflow-y: auto;
+  > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+  }
+  .item_left {
+    display: flex;
+    align-items: center;
+    h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+    p {
+      color: var(--theme-secondary-color);
+    }
+  }
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--theme-cherry);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    font-size: 40px;
+  }
+  .amount {
+    color: var(--theme-cherry);
+    font-size: 32px;
+  }
+}
+
+.form {
+  padding: 40px 40px 0;
+}

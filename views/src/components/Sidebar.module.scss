@@ -44,12 +44,13 @@
     }
 
     ul {
-      > li {
+      > li > a {
         display: flex;
         align-items: center;
         font-size: 32px;
         margin-bottom: 60px;
         padding-left: 25px;
+        text-decoration: none;
         svg {
           margin-right: 20px;
         }

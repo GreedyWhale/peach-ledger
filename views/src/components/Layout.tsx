@@ -17,7 +17,7 @@ export const Layout: React.FC = () => {
   const navigateConfig = React.useMemo(() => {
     const defaultTitle = `桃子记账 ${getEmoji('Food & Drink', 11)}`;
     const titleMap: Record<string, string> = {
-      '/item': '记一笔',
+      '/item/create': '记一笔',
       '/tag/create': '创建标签',
     };
 
@@ -35,6 +35,10 @@ export const Layout: React.FC = () => {
 
     navigate(-1);
   };
+
+  React.useEffect(() => {
+    setSidebarVisible(false);
+  }, [location.pathname]);
 
   return (
     <div className={styles.layout}>

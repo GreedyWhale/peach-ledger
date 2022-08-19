@@ -12,14 +12,16 @@ import { Rules, validator } from '~/utils/validator';
 
 type Errors = Partial<Record<'name' | 'sign', string[]>>;
 
-interface Store {
+interface InitialStoreStore {
   sign: string[];
   name: string;
   errors: Errors;
-
+}
+interface Store extends InitialStoreStore{
   setSign: (_sign: string[]) => void;
   setName: (_name: string) => void;
   updateErrors: (_errors: Errors) => void;
+  resetStore: () => void;
 }
 
 interface TagLayoutProps {
@@ -32,13 +34,17 @@ const formRules: Rules<Pick<Store, 'name' | 'sign'>> = [
   { key: 'sign', message: '符号是必要的', required: sign => Boolean((sign as string[]).length) },
 ];
 
+const initialStore: InitialStoreStore = {
+  sign: [],
+  name: '',
+  errors: {},
+};
+
 const useStore = create<Store>()(
   devtools(
     subscribeWithSelector(
       immer(set => ({
-        sign: [],
-        name: '',
-        errors: {},
+        ...initialStore,
 
         setSign: sign => set(state => {
           state.sign = sign;
@@ -58,6 +64,8 @@ const useStore = create<Store>()(
         updateErrors: errors => set(state => {
           Object.assign(state.errors, errors);
         }),
+
+        resetStore: () => set(initialStore),
       })),
     ),
   ),
@@ -69,7 +77,7 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
     name: state.name,
     errors: state.errors,
   }));
-  const { setSign, setName, updateErrors } = useStore.getState();
+  const { setSign, setName, updateErrors, resetStore } = useStore.getState();
   const unsubscribeName = useStore.subscribe(
     state => state.name,
     () => updateErrors({ name: [] }),
@@ -94,6 +102,7 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
 
   React.useEffect(() => unsubscribeName, [unsubscribeName]);
   React.useEffect(() => unsubscribeSign, [unsubscribeSign]);
+  React.useEffect(() => resetStore, [resetStore]);
 
   return (
     <div className={styles.container}>
@@ -103,6 +112,8 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
           label='标签名：'
           value={name}
           onChange={event => setName(event.target.value)}
+          placeholder='2-4个字符'
+          maxLength={4}
           error={errors.name?.[0]}
         />
 

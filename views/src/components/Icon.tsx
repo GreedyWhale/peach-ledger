@@ -15,6 +15,7 @@ export interface IconProps {
   | 'sidebarChart'
   | 'sidebarExport'
   | 'sidebarNotify'
+  | 'sidebarSummary'
   | 'date'
   | 'triangle';
   className?: string;

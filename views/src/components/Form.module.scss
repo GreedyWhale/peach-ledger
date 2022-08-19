@@ -1,5 +1,11 @@
 @import '~/assets/styles/tools.scss';
 
+.form_item_wrap {
+  &[data-disabled='true'] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
 .form_item {
   margin-bottom: 40px;
   label {

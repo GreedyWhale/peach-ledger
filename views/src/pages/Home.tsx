@@ -7,7 +7,7 @@ import { Button } from '~/components/Button';
 export const Home = () => {
   const navigate = useNavigate();
 
-  const toItemCreatePage = () => navigate('/item');
+  const toItemCreatePage = () => navigate('/item/create');
 
   return (
     <div className={styles.container}>

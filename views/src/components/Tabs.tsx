@@ -6,12 +6,14 @@ import { devtools } from 'zustand/middleware';
 import styles from './Tabs.module.scss';
 
 interface TabsItem { tab: React.ReactNode, key: number | string }
-interface Store {
+interface InitialStore {
   activeKey: TabsItem['key'];
   tabs: TabsItem[];
-
+}
+interface Store extends InitialStore{
   setActiveKey: (_key: TabsItem['key']) => void;
   setTabs: (_tab: TabsItem) => void;
+  resetStore: () => void;
 }
 
 interface TabsProps {
@@ -24,11 +26,15 @@ interface TabPaneProps {
   dataKey: TabsItem['key'];
 }
 
+const initialStore: InitialStore = {
+  activeKey: '',
+  tabs: [],
+};
+
 const useStore = create<Store>()(
   devtools(
     immer((set, get) => ({
-      activeKey: '',
-      tabs: [],
+      ...initialStore,
 
       setActiveKey: key => set(state => {
         state.activeKey = key;
@@ -40,6 +46,7 @@ const useStore = create<Store>()(
 
         state.tabs = result;
       }),
+      resetStore: () => set(initialStore),
     })),
   ),
 );
@@ -47,11 +54,13 @@ const useStore = create<Store>()(
 export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = props => {
   const tabs = useStore(state => state.tabs);
   const activeKey = useStore(state => state.activeKey);
-  const { setActiveKey } = useStore.getState();
+  const { setActiveKey, resetStore } = useStore.getState();
 
   React.useEffect(() => {
     setActiveKey(props.activeKey);
   }, [props.activeKey, setActiveKey]);
+
+  React.useEffect(() => resetStore, [resetStore]);
 
   return (
     <div className={[styles.container, props.className || ''].join(' ')}>

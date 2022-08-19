@@ -5,7 +5,7 @@ import styles from './DatePicker.module.scss';
 
 import { getDateList, enWeeks } from '~/utils/date';
 
-interface DatePickerProps {
+export interface DatePickerProps {
   onFinish: (_date: string) => void;
 }
 

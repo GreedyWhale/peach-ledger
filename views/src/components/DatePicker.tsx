@@ -7,6 +7,7 @@ import { getDateList, enWeeks } from '~/utils/date';
 
 export interface DatePickerProps {
   onFinish: (_date: string) => void;
+  onCancel: () => void;
 }
 
 export const DatePicker: React.FC<DatePickerProps> = props => {
@@ -118,6 +119,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.mask} onClick={props.onCancel} />
       <div className={styles.date_picker}>
         {collapseList.map((value, index) => (
           <Collapse

@@ -103,10 +103,15 @@ export const FormItem: React.FC<React.PropsWithChildren<FormItemProps>> = props 
             <input type='text' value={props.value} readOnly onClick={() => setDataPickerVisible(true)}/>
           </label>
           <p className={styles.error_message}>{props.error}</p>
-          {dataPickerVisible && <DatePicker onFinish={date => {
-            props.onDate(date);
-            setDataPickerVisible(false);
-          }}/>}
+          {dataPickerVisible && (
+            <DatePicker
+              onFinish={date => {
+                props.onDate(date);
+                setDataPickerVisible(false);
+              }}
+              onCancel={() => setDataPickerVisible(false)}
+            />
+          )}
         </div>
       )}
       {props.type === 'shortCode' && (

@@ -173,7 +173,7 @@ export const ItemCreate: React.FC = () => {
           </ol>
         </div>
       </div>
-      {dataPickerVisible && <DatePicker onFinish={handleDate}/>}
+      {dataPickerVisible && <DatePicker onFinish={handleDate} onCancel={() => setDataPickerVisible(false)} />}
     </div>
   );
 };

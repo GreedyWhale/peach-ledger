@@ -1,7 +1,6 @@
 import React, { FormEvent } from 'react';
-import create from 'zustand';
-import { immer } from 'zustand/middleware/immer';
-import { devtools, subscribeWithSelector } from 'zustand/middleware';
+import { atomWithImmer } from 'jotai/immer';
+import { Provider, useAtom } from 'jotai';
 
 import styles from './TagLayout.module.scss';
 import { Form, FormItem } from '~/components/Form';
@@ -12,16 +11,10 @@ import { Rules, validator } from '~/utils/validator';
 
 type Errors = Partial<Record<'name' | 'sign', string[]>>;
 
-interface InitialStoreStore {
+interface Store {
   sign: string[];
   name: string;
   errors: Errors;
-}
-interface Store extends InitialStoreStore{
-  setSign: (_sign: string[]) => void;
-  setName: (_name: string) => void;
-  updateErrors: (_errors: Errors) => void;
-  resetStore: () => void;
 }
 
 interface TagLayoutProps {
@@ -34,65 +27,22 @@ const formRules: Rules<Pick<Store, 'name' | 'sign'>> = [
   { key: 'sign', message: '符号是必要的', required: sign => Boolean((sign as string[]).length) },
 ];
 
-const initialStore: InitialStoreStore = {
+const tagLayoutScope = Symbol('TagLayoutScope');
+const storeAtom = atomWithImmer<Store>({
   sign: [],
   name: '',
   errors: {},
-};
+});
 
-const useStore = create<Store>()(
-  devtools(
-    subscribeWithSelector(
-      immer(set => ({
-        ...initialStore,
-
-        setSign: sign => set(state => {
-          state.sign = sign;
-        }),
-
-        setName: name => set(state => {
-          // 为了修复移动端 input 在输入后全部删除导致 基线对齐错位问题
-          // @see https://stackoverflow.com/a/20847688
-          if (!name) {
-            state.name = ' ';
-            return;
-          }
-
-          state.name = name;
-        }),
-
-        updateErrors: errors => set(state => {
-          Object.assign(state.errors, errors);
-        }),
-
-        resetStore: () => set(initialStore),
-      })),
-    ),
-  ),
-);
-
-export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = props => {
-  const { sign, name, errors } = useStore(state => ({
-    sign: state.sign,
-    name: state.name,
-    errors: state.errors,
-  }));
-  const { setSign, setName, updateErrors, resetStore } = useStore.getState();
-  const unsubscribeName = useStore.subscribe(
-    state => state.name,
-    () => updateErrors({ name: [] }),
-  );
-  const unsubscribeSign = useStore.subscribe(
-    state => state.sign,
-    () => updateErrors({ sign: [] }),
-  );
+export const TagLayoutInner: React.FC<React.PropsWithChildren<TagLayoutProps>> = props => {
+  const [store, setStore] = useAtom(storeAtom, tagLayoutScope);
 
   const handleCreateTag = async (event: FormEvent) => {
     event.preventDefault();
-    const errors = validator({ sign, name: name.trim() }, formRules);
+    const errors = validator({ sign: store.sign, name: store.name.trim() }, formRules);
 
     if (errors) {
-      updateErrors(errors);
+      setStore(draft => { draft.errors = errors; });
       return;
     }
 
@@ -100,28 +50,24 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
     console.log('go on');
   };
 
-  React.useEffect(() => unsubscribeName, [unsubscribeName]);
-  React.useEffect(() => unsubscribeSign, [unsubscribeSign]);
-  React.useEffect(() => resetStore, [resetStore]);
-
   return (
     <div className={styles.container}>
       <Form>
         <FormItem
           type='text'
           label='标签名：'
-          value={name}
-          onChange={event => setName(event.target.value)}
+          value={store.name}
+          onChange={event => setStore(draft => { draft.name = event.target.value; })}
           placeholder='2-4个字符'
           maxLength={4}
-          error={errors.name?.[0]}
+          error={store.errors.name?.[0]}
         />
 
         <FormItem
           type='emoji'
-          error={errors.sign?.[0]}
-          label={<>符号：{sign && <span>{showEmoji(sign)}</span>}</>}
-          onSelect={setSign}
+          error={store.errors.sign?.[0]}
+          label={<>符号：{store.sign && <span>{showEmoji(store.sign)}</span>}</>}
+          onSelect={emoji => setStore(draft => { draft.sign = emoji; })}
         />
 
         <p className={styles.tip}>记账时长按标签，即可进行编辑</p>
@@ -136,3 +82,9 @@ export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = prop
     </div>
   );
 };
+
+export const TagLayout: React.FC<React.PropsWithChildren<TagLayoutProps>> = props => (
+  <Provider scope={tagLayoutScope}>
+    <TagLayoutInner {...props} />
+  </Provider>
+);

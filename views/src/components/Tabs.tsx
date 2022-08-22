@@ -1,20 +1,18 @@
 import React from 'react';
-import create from 'zustand';
-import { immer } from 'zustand/middleware/immer';
-import { devtools } from 'zustand/middleware';
+import { atom, useSetAtom, useAtomValue, Provider } from 'jotai';
+import { atomWithImmer } from 'jotai/immer';
 
 import styles from './Tabs.module.scss';
 
 interface TabsItem { tab: React.ReactNode, key: number | string }
-interface InitialStore {
+
+interface Store {
   activeKey: TabsItem['key'];
   tabs: TabsItem[];
 }
-interface Store extends InitialStore{
-  setActiveKey: (_key: TabsItem['key']) => void;
-  setTabs: (_tab: TabsItem) => void;
-  resetStore: () => void;
-}
+
+type Action = { type: 'updateActiveKey', payload: Store['activeKey'] }
+| { type: 'updateTabs', payload: TabsItem };
 
 interface TabsProps {
   activeKey: TabsItem['key'];
@@ -26,50 +24,48 @@ interface TabPaneProps {
   dataKey: TabsItem['key'];
 }
 
-const initialStore: InitialStore = {
+const tabStoreScope = Symbol('tabStoreScope');
+
+export const storeAtom = atomWithImmer<Store>({
   activeKey: '',
   tabs: [],
-};
+});
 
-const useStore = create<Store>()(
-  devtools(
-    immer((set, get) => ({
-      ...initialStore,
+const dispatchAtom = atom<null, Action>(null, (get, set, action) => {
+  switch (action.type) {
+    case 'updateActiveKey':
+      set(storeAtom, draft => { draft.activeKey = action.payload; });
+      break;
+    case 'updateTabs': {
+      const newTabs = [...get(storeAtom).tabs, action.payload].filter(function (this: Set<TabsItem['key']>, value) {
+        return !this.has(value.key) && this.add(value.key);
+      }, new Set());
 
-      setActiveKey: key => set(state => {
-        state.activeKey = key;
-      }),
-      setTabs: tab => set(state => {
-        const result = [...get().tabs, tab].filter(function (this: Set<TabsItem['key']>, value) {
-          return !this.has(value.key) && this.add(value.key);
-        }, new Set());
+      set(storeAtom, draft => { draft.tabs = newTabs; });
+      break;
+    }
 
-        state.tabs = result;
-      }),
-      resetStore: () => set(initialStore),
-    })),
-  ),
-);
+    default:
+      break;
+  }
+});
 
-export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = props => {
-  const tabs = useStore(state => state.tabs);
-  const activeKey = useStore(state => state.activeKey);
-  const { setActiveKey, resetStore } = useStore.getState();
+export const TabsInner: React.FC<React.PropsWithChildren<TabsProps>> = props => {
+  const store = useAtomValue(storeAtom, tabStoreScope);
+  const storeReducer = useSetAtom(dispatchAtom, tabStoreScope);
 
   React.useEffect(() => {
-    setActiveKey(props.activeKey);
-  }, [props.activeKey, setActiveKey]);
-
-  React.useEffect(() => resetStore, [resetStore]);
+    storeReducer({ type: 'updateActiveKey', payload: props.activeKey });
+  }, [props.activeKey, storeReducer]);
 
   return (
     <div className={[styles.container, props.className || ''].join(' ')}>
       <ul className={styles.tabs}>
-        {tabs.map(value => (
+        {store.tabs.map(value => (
           <li
             key={value.key}
-            data-active={activeKey === value.key}
-            onClick={() => setActiveKey(value.key)}
+            data-active={store.activeKey === value.key}
+            onClick={() => storeReducer({ type: 'updateActiveKey', payload: value.key })}
           >
             {value.tab}
           </li>
@@ -81,17 +77,26 @@ export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = props => {
 };
 
 export const TabPane: React.FC<React.PropsWithChildren<TabPaneProps>> = props => {
-  const activeKey = useStore(state => state.activeKey);
-  const { setTabs } = useStore.getState();
+  const store = useAtomValue(storeAtom, tabStoreScope);
+  const storeReducer = useSetAtom(dispatchAtom, tabStoreScope);
 
   React.useEffect(() => {
-    setTabs({ tab: props.tab, key: props.dataKey });
-  }, [props.dataKey, props.tab, setTabs]);
+    storeReducer({
+      type: 'updateTabs',
+      payload: { tab: props.tab, key: props.dataKey },
+    });
+  }, [props.dataKey, props.tab, storeReducer]);
 
   return (
-    <div className={styles.tab_pane} data-visible={activeKey === props.dataKey}>
+    <div className={styles.tab_pane} data-visible={store.activeKey === props.dataKey}>
       {props.children}
     </div>
   );
 };
+
+export const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = props => (
+  <Provider scope={tabStoreScope}>
+    <TabsInner {...props} />
+  </Provider>
+);
 

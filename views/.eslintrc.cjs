@@ -31,5 +31,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn', // 检查 effect 的依赖
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
+    'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+    'max-statements-per-line': ['error', { max: 2 }],
   },
 };

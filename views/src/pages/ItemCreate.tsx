@@ -7,6 +7,7 @@ import { Icon } from '~/components/Icon';
 import { DatePicker } from '~/components/DatePicker';
 
 import { formatDate } from '~/utils/date';
+import { showEmoji } from '~/hooks/useEmoji';
 
 const calculatorButtons = [
   { value: '1' },
@@ -23,6 +24,30 @@ const calculatorButtons = [
   { value: 'submit', text: '提交' },
   { value: '0' },
   { value: '.' },
+];
+
+const fakeTags = [
+  { id: 1, sign: ['1F34B'], name: '测试' },
+  { id: 2, sign: ['1F34B'], name: '测试' },
+  { id: 3, sign: ['1F34B'], name: '测试' },
+  { id: 4, sign: ['1F34B'], name: '测试' },
+  { id: 5, sign: ['1F34B'], name: '测试' },
+  { id: 6, sign: ['1F34B'], name: '测试' },
+  { id: 7, sign: ['1F34B'], name: '测试' },
+  { id: 8, sign: ['1F34B'], name: '测试' },
+  { id: 9, sign: ['1F34B'], name: '测试' },
+  { id: 10, sign: ['1F34B'], name: '测试' },
+  { id: 11, sign: ['1F34B'], name: '测试' },
+  { id: 12, sign: ['1F34B'], name: '测试' },
+  { id: 13, sign: ['1F34B'], name: '测试' },
+  { id: 14, sign: ['1F34B'], name: '测试' },
+  { id: 15, sign: ['1F34B'], name: '测试' },
+  { id: 16, sign: ['1F34B'], name: '测试' },
+  { id: 17, sign: ['1F34B'], name: '测试' },
+  { id: 18, sign: ['1F34B'], name: '测试' },
+  { id: 19, sign: ['1F34B'], name: '测试' },
+  { id: 20, sign: ['1F34B'], name: '测试' },
+  { id: 21, sign: ['1F34B'], name: '测试' },
 ];
 
 export const ItemCreate: React.FC = () => {
@@ -111,7 +136,17 @@ export const ItemCreate: React.FC = () => {
   return (
     <div className={styles.container}>
       <Tabs activeKey='expenditure' className={styles.tabs}>
-        <TabPane dataKey='expenditure' tab='支出'>支出</TabPane>
+        <TabPane dataKey='expenditure' tab='支出'>
+          <ul className={styles.tags}>
+            <li><span><Icon icon='addSquare' className={styles.add_icon} /></span></li>
+            {fakeTags.map(tag => (
+              <li key={tag.id}>
+                <span>{showEmoji(tag.sign)}</span>
+                <span>{tag.name}</span>
+              </li>
+            ))}
+          </ul>
+        </TabPane>
         <TabPane dataKey='income' tab='收入'>收入</TabPane>
       </Tabs>
       <div className={styles.calculator}>

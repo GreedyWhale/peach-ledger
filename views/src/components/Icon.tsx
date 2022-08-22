@@ -17,7 +17,8 @@ export interface IconProps {
   | 'sidebarNotify'
   | 'sidebarSummary'
   | 'date'
-  | 'triangle';
+  | 'triangle'
+  | 'addSquare';
   className?: string;
   onClick?: () => void;
 }

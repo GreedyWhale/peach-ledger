@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   loading?: boolean;
   ghost?: boolean;
+  text?: boolean;
   disabled?: boolean;
   onClick?: (_event: OnClickEventType) => Promise<any>;
   type?: 'button' | 'submit' | 'reset';
@@ -33,6 +34,7 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = props => {
     <div
       className={[styles.container, props.className || ''].join(' ')}
       data-ghost={props.ghost}
+      data-text={props.text}
       data-disabled={props.disabled}
     >
       <button className={styles.inner} onClick={handleClick} type={props.type || 'button'}>

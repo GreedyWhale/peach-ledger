@@ -9,6 +9,7 @@ import { ItemCreate } from '~/pages/ItemCreate';
 import { ItemList } from '~/pages/ItemList';
 import { TagCreate } from '~/pages/TagCreate';
 import { TagUpdate } from '~/pages/TagUpdate';
+import { SignIn } from '~/pages/SignIn';
 
 import useIcon from '~/hooks/useIcon';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='create' element={<TagCreate />} />
           <Route path='update' element={<TagUpdate />} />
         </Route>
+        <Route path='/signIn' element={<SignIn />} />
       </Route>
       <Route path='/welcome' element={<Welcome />} />
       <Route path='*' element={<Navigate to='/welcome' replace />} />

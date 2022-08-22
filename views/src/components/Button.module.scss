@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: center;
     background: var(--theme-main-color);
-    padding: 1.5em 2em;
+    padding: 1em 2em;
     border-radius: 8px;
     .loadingIcon {
       margin-right: 0.5em;
@@ -33,12 +33,26 @@
     }
   }
 
+  &[data-text='true'] {
+    width: auto;
+    > .inner {
+      background: transparent;
+      padding: 0;
+      width: auto;
+    }
+  }
+
   &[data-disabled='true'] {
     color: rgba(255, 255, 255, 0.3);
     .inner {
       background: rgba(255, 255, 255, 0.12);
       pointer-events: none;
       border-color: rgba(255, 255, 255, 0.12);
+    }
+    &[data-text='true'] {
+      .inner {
+        background: transparent;
+      }
     }
   }
 }

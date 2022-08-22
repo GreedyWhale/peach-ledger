@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 
 import styles from './ItemCreate.module.scss';
@@ -51,6 +52,7 @@ const fakeTags = [
 ];
 
 export const ItemCreate: React.FC = () => {
+  const navigate = useNavigate();
   const [dataPickerVisible, setDataPickerVisible] = React.useState(false);
   const [formData, setFormData] = useImmer({
     amount: '0',
@@ -138,7 +140,11 @@ export const ItemCreate: React.FC = () => {
       <Tabs activeKey='expenditure' className={styles.tabs}>
         <TabPane dataKey='expenditure' tab='支出'>
           <ul className={styles.tags}>
-            <li><span><Icon icon='addSquare' className={styles.add_icon} /></span></li>
+            <li>
+              <span>
+                <Icon icon='addSquare' className={styles.add_icon} onClick={() => navigate('/tag/create')}/>
+              </span>
+            </li>
             {fakeTags.map(tag => (
               <li key={tag.id}>
                 <span>{showEmoji(tag.sign)}</span>

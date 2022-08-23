@@ -113,7 +113,7 @@ export const DateTabsLayout: React.FC<DateTabsLayoutProps> = props => {
 
   return (
     <div className={styles.container}>
-      <Tabs activeKey='currentMonth'>
+      <Tabs activeKey='currentMonth' className={styles.tabs}>
         {tabs.map(tab => (
           <TabPane dataKey={tab.key} tab={tab.tab} key={tab.key}>
             <DateForm

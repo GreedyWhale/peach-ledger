@@ -12,11 +12,7 @@ export const ItemList: React.FC = () => (
   </div>
 );
 
-interface ItemProps {
-  date: string[];
-}
-
-const Item: React.FC<ItemProps> = props => {
+const Item: React.FC<{ date: string[]; }> = props => {
   const fakeData = [
     { id: 1, tag: { sign: ['1F680'], name: '旅行' }, amount: 1000, date: '2022/12/12' },
     { id: 2, tag: { sign: ['1F6EB'], name: '旅行' }, amount: 1000, date: '2022/12/12' },

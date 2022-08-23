@@ -28,9 +28,3 @@
     }
   }
 }
-
-.tab_pane {
-  &[data-visible='false'] {
-    display: none;
-  }
-}

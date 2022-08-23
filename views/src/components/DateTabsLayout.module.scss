@@ -1,3 +1,14 @@
+@import '~/assets/styles/tools.scss';
+
 .form {
   padding: 40px 40px 0;
+}
+
+.tabs {
+  > ul {
+    position: sticky;
+    left: 0;
+    top: var(--navigation-bar-height);
+    @include zIndex(nav);
+  }
 }

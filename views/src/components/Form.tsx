@@ -28,8 +28,15 @@ type FormItemProps = {
   { type: 'emoji'; onSelect: EmojiSelectorProps['onSelect'] } |
   { type: 'date'; value: string; onDate: DatePickerProps['onFinish'] } |
   { type: 'shortCode'; value: string; onSendCode: () => Promise<void>; onChange: React.ChangeEventHandler<HTMLInputElement>; } |
+  {
+    type: 'radio';
+    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    options: {key: string, value: string | number}[];
+    value: string;
+  } |
   { type: undefined }
 );
+let formItemId = 1;
 
 export const Form: React.FC<React.PropsWithChildren<FormProps>> = props => (
   <form className={[styles.form, props.className || ''].join(' ')} onSubmit={props.onSubmit}>
@@ -65,6 +72,10 @@ export const FormItem: React.FC<React.PropsWithChildren<FormItemProps>> = props 
     }, 1000);
     await props.onSendCode().catch(resetCodeTimer);
   };
+
+  React.useEffect(() => {
+    formItemId += 1;
+  }, []);
 
   if (!props.type) {
     return <>{props.children}</>;
@@ -126,6 +137,25 @@ export const FormItem: React.FC<React.PropsWithChildren<FormItemProps>> = props 
             />
             <Button onClick={handleSendCode} className={styles.send_code_button} text>{shortCodeButton}</Button>
           </label>
+          <p className={styles.error_message}>{props.error}</p>
+        </div>
+      )}
+      {props.type === 'radio' && (
+        <div className={setClassNames([styles.form_item, styles.radio_item, props.className])}>
+          <label>{props.label}</label>
+          {props.options.map(option => (
+            <div className={styles.radio_wrap} key={option.key}>
+              <input
+                type='radio'
+                id={option.key}
+                name={`radio-${formItemId}`}
+                checked={option.value === props.value}
+                value={option.value}
+                onChange={props.onChange}
+              />
+              <label htmlFor={option.key}>{option.key}</label>
+            </div>
+          ))}
           <p className={styles.error_message}>{props.error}</p>
         </div>
       )}

@@ -87,8 +87,12 @@ export const TabPane: React.FC<React.PropsWithChildren<TabPaneProps>> = props =>
     });
   }, [props.dataKey, props.tab, storeReducer]);
 
+  if (store.activeKey !== props.dataKey) {
+    return <></>;
+  }
+
   return (
-    <div className={styles.tab_pane} data-visible={store.activeKey === props.dataKey}>
+    <div className={styles.tab_pane}>
       {props.children}
     </div>
   );

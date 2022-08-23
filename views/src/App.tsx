@@ -7,6 +7,7 @@ import { Welcome } from '~/pages/Welcome';
 import { Home } from '~/pages/Home';
 import { ItemCreate } from '~/pages/ItemCreate';
 import { ItemList } from '~/pages/ItemList';
+import { ItemCharts } from '~/pages/ItemCharts';
 import { TagCreate } from '~/pages/TagCreate';
 import { TagUpdate } from '~/pages/TagUpdate';
 import { SignIn } from '~/pages/SignIn';
@@ -23,6 +24,7 @@ function App() {
         <Route path='/item'>
           <Route index element={<ItemList />} />
           <Route path='create' element={<ItemCreate />} />
+          <Route path='chart' element={<ItemCharts />} />
         </Route>
         <Route path='/tag'>
           <Route path='create' element={<TagCreate />} />

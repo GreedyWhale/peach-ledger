@@ -1,102 +1,19 @@
 import React from 'react';
-import * as dayjs from 'dayjs';
-import { useImmer } from 'use-immer';
 
 import styles from './ItemList.module.scss';
-import { Tabs, TabPane } from '~/components/Tabs';
 import { Pagination } from '~/components/Pagination';
-import { Form, FormItem } from '~/components/Form';
-import { validator, Rules } from '~/utils/validator';
+import { DateTabsLayout } from '~/components/DateTabsLayout';
 
 import { showEmoji } from '~/hooks/useEmoji';
 
-export const ItemList: React.FC = () => {
-  const [customDate, setCustomDate] = React.useState([
-    dayjs().format('YYYY/MM/DD'),
-    dayjs().add(7, 'days').format('YYYY/MM/DD'),
-  ]);
-  const [errors, setErrors] = useImmer({
-    endDate: [],
-  });
-
-  const updateDate: ItemProps['updateDate'] = (date, key) => {
-    const formRules: Rules<{endDate: string}> = [
-      {
-        key: 'endDate',
-        required: endDate => !(dayjs(endDate).isSame(dayjs(customDate[0]))),
-        message: '结束时间不能和开始时间相同',
-      },
-      {
-        key: 'endDate',
-        required: endDate => !(dayjs(endDate).isBefore(dayjs(customDate[0]))),
-        message: '结束时间不能早于开始时间',
-      },
-    ];
-
-    if (key === 'start') {
-      setCustomDate([date, dayjs(date).add(7, 'days').format('YYYY/MM/DD')]);
-      return;
-    }
-
-    const errors = validator({ endDate: date }, formRules);
-
-    if (errors) {
-      setErrors(draft => {
-        Object.assign(draft, errors);
-      });
-      return;
-    }
-
-    setCustomDate(prev => ([prev[0], date]));
-  };
-
-  return (
-    <div className={styles.container}>
-      <Tabs activeKey='currentMonth'>
-        <TabPane dataKey='currentMonth' tab='本月'>
-          <Item
-            date={[
-              dayjs().startOf('M').format('YYYY/MM/DD'),
-              dayjs().endOf('M').format('YYYY/MM/DD'),
-            ]}
-            disabled
-          />
-        </TabPane>
-        <TabPane dataKey='previousMonth' tab='上个月'>
-          <Item
-            date={[
-              dayjs().subtract(1, 'M').startOf('M').format('YYYY/MM/DD'),
-              dayjs().subtract(1, 'M').endOf('M').format('YYYY/MM/DD'),
-            ]}
-            disabled
-          />
-        </TabPane>
-        <TabPane dataKey='currentYear' tab='今年'>
-          <Item
-            date={[
-              dayjs().startOf('y').format('YYYY/MM/DD'),
-              dayjs().endOf('y').format('YYYY/MM/DD'),
-            ]}
-            disabled
-          />
-        </TabPane>
-        <TabPane dataKey='customDate' tab='自定义时间'>
-          <Item
-            date={customDate}
-            updateDate={updateDate}
-            errors={['', errors.endDate[0]]}
-          />
-        </TabPane>
-      </Tabs>
-    </div>
-  );
-};
+export const ItemList: React.FC = () => (
+  <div className={styles.container}>
+    <DateTabsLayout component={Item} />
+  </div>
+);
 
 interface ItemProps {
   date: string[];
-  errors?: string[];
-  disabled?: boolean;
-  updateDate?: (_date: string, _key: 'start' | 'end') => void;
 }
 
 const Item: React.FC<ItemProps> = props => {
@@ -110,27 +27,10 @@ const Item: React.FC<ItemProps> = props => {
     { id: 7, tag: { sign: ['1F6EB'], name: '旅行' }, amount: 1000, date: '2022/12/12' },
   ];
 
+  console.log(props.date);
+
   return (
     <div>
-      <Form className={styles.form}>
-        <FormItem
-          label='开始时间：'
-          type='date'
-          value={props.date[0]}
-          onDate={date => props.updateDate?.(date, 'start')}
-          error={props.errors?.[0]}
-          disabled={props.disabled}
-        />
-        <FormItem
-          label='结束时间：'
-          type='date'
-          value={props.date[1]}
-          onDate={date => props.updateDate?.(date, 'end')}
-          error={props.errors?.[1]}
-          disabled={props.disabled}
-        />
-      </Form>
-
       <ul className={styles.summary}>
         <li><span>收入</span><span>2000</span></li>
         <li><span>支出</span><span>1000</span></li>

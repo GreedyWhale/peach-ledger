@@ -38,8 +38,7 @@ gem "rack-cors"
 
 gem 'dotenv-rails'
 
-# vs code 插件需要
-gem 'solargraph', group: :development
+gem 'rspec_api_documentation'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -51,5 +50,8 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # vs code 插件需要
+  gem 'solargraph'
 end
 

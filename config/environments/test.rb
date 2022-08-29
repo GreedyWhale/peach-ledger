@@ -42,6 +42,19 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  # 发送真实的邮件
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.qq.com',
+    port:                 587,
+    domain:               'smtp.qq.com',
+    user_name:            Rails.application.credentials[:email_account],
+    password:             Rails.application.credentials[:email_key],
+    authentication:       'plain',
+    enable_starttls_auto: true,
+    open_timeout:         5,
+    read_timeout:         5
+  }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

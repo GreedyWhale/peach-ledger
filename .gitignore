@@ -54,3 +54,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+/config/credentials/test.key
+
+/config/credentials/environment.key

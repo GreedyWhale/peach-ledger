@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios';
 
 import { REQUEST_CODE_NO_RESPONSE, REQUEST_CODE_CODE_ERROR } from '~/utils/constants';
 import { showDialog } from '~/components/Dialog';
+import { Icon } from '~/components/Icon';
 
 const axiosInstance = axios.create({
   baseURL: 'http://127.0.0.1:3000',
@@ -55,10 +56,13 @@ axiosInstance.interceptors.response.use(response => ({
   }
 
   if (error.config.showErrorDialog) {
-    showDialog({ content: result.message });
+    showDialog({
+      icon: <Icon icon='danger' color='#FF4C29' />,
+      content: result.message,
+    });
   }
 
-  return result;
+  return Promise.reject(result);
 });
 
 export default axiosInstance;

@@ -38,7 +38,9 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = props => {
       data-disabled={props.disabled}
     >
       <button className={styles.inner} onClick={handleClick} type={props.type || 'button'}>
-        {loading && <Icon icon='buttonLoading' className={styles.loadingIcon} />}
+        <span data-visible={loading} className={styles.icon_wrap}>
+          <Icon icon='buttonLoading' className={styles.loading_icon} />
+        </span>
         {props.children}
       </button>
     </div>

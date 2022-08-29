@@ -7,6 +7,8 @@ import { Button } from '~/components/Button';
 import { Icon } from '~/components/Icon';
 
 import { validator, Rules } from '~/utils/validator';
+import { sendAuthCodes } from '~/service/user';
+import { promiseWithAllSettled } from '~/utils/promise';
 
 export const SignIn: React.FC = () => {
   const [formData, setFormData] = useImmer({
@@ -33,6 +35,37 @@ export const SignIn: React.FC = () => {
     }
 
     console.log('done');
+  };
+
+  const handleSendCode = async () => {
+    const rules: Rules<typeof formData> = [
+      { key: 'email', required: true, message: '必填' },
+      { key: 'email', required: email => /.+@.+/gm.test(email), message: '邮箱格式错误' },
+    ];
+    const errors = validator(formData, rules);
+
+    if (errors) {
+      setErrors(draft => { Object.assign(draft, errors); });
+      return Promise.reject();
+    }
+
+    const result = await promiseWithAllSettled(sendAuthCodes({ email: formData.email }));
+
+    if (result.status === 'rejected') {
+      const _errors = result.reason.errors;
+      if (_errors) {
+        const { email = [], code = [], ...rest } = _errors;
+        if (rest) {
+          Object.values(rest).forEach(value => code.push(...value));
+        }
+
+        setErrors(draft => { Object.assign(draft, { email, code }); });
+        return Promise.reject();
+      }
+
+      setErrors(draft => { Object.assign(draft, { code: result.reason.message }); });
+      return Promise.reject();
+    }
   };
 
   return (
@@ -65,7 +98,7 @@ export const SignIn: React.FC = () => {
             setErrors(draft => { draft.code = []; });
             setFormData(draft => { draft.code = event.target.value; });
           }}
-          onSendCode={async () => {}}
+          onSendCode={handleSendCode}
         />
 
         <Button className={styles.submit_button} onClick={handleSubmit}>登录</Button>

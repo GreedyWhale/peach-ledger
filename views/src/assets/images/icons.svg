@@ -236,4 +236,16 @@
       <path d="M344.083 494L344.083 341.061L493.463 341.122L493.463 157.834L341.659 157.834L341.659 6L158.402 6L158.402 157.834L6.537 157.834L6.537 341.061L155.917 341.122L155.917 494L344.083 494Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="12"></path>
     </g>
   </symbol>
+  <symbol stroke-miterlimit="10" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsVectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" id="danger">
+    <defs></defs>
+    <g id="图层-1" vectornatorLayerName="图层 1">
+      <g opacity="1">
+        <path d="M250 2.5C386.692 2.5 497.5 113.308 497.5 250C497.5 386.692 386.692 497.5 250 497.5C113.308 497.5 2.5 386.692 2.5 250C2.5 113.308 113.308 2.5 250 2.5Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"></path>
+        <path d="M250 202.097C276.451 202.097 297.903 223.549 297.903 250C297.903 276.451 276.451 297.903 250 297.903C223.549 297.903 202.097 276.451 202.097 250C202.097 223.549 223.549 202.097 250 202.097Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"></path>
+        <path d="M214.931 174.45L162.222 61.5097C91.4766 94.5868 42.4317 166.354 42.4317 249.626L166.98 249.626C166.98 216.317 186.628 187.671 214.931 174.45Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"></path>
+        <path d="M285.101 174.45C313.252 187.599 332.837 216.037 333.02 249.131L457.585 249.131C457.393 166.082 408.412 94.523 337.802 61.5097L285.101 174.45Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"></path>
+        <path d="M303.603 312.998C289.136 325.237 270.462 332.662 250.015 332.662C230.024 332.662 211.677 325.588 197.338 313.828L118.337 410.106C154.169 439.55 200.02 457.21 250.015 457.21C300.937 457.21 347.554 438.847 383.673 408.413L303.603 312.998Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"></path>
+      </g>
+    </g>
+  </symbol>
 </svg>

@@ -18,15 +18,20 @@ export interface IconProps {
   | 'sidebarSummary'
   | 'date'
   | 'triangle'
-  | 'addSquare';
+  | 'addSquare'
+  | 'danger';
   className?: string;
   onClick?: () => void;
+  color?: string;
 }
 
 export const Icon: React.FC<IconProps> = props => (
   <svg
     className={[styles.icon, props.className || ''].join(' ')}
     onClick={props.onClick}
+    style={{
+      color: props.color,
+    }}
   >
     <use xlinkHref={`#${props.icon}`}></use>
   </svg>

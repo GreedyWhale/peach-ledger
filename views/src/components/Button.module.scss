@@ -10,18 +10,31 @@
   .inner {
     @include resetButton;
     width: 100%;
-    height: 100%;
+    min-height: 1.5em;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--theme-main-color);
     padding: 1em 2em;
     border-radius: 8px;
-    .loadingIcon {
-      margin-right: 0.5em;
+    .loading_icon {
       width: 1.5em;
       height: 1.5em;
       animation: rotate 0.75s linear infinite forwards;
+    }
+    .icon_wrap {
+      width: 0;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      &[data-visible='true'] {
+        margin-right: 0.5em;
+        width: 1.5em;
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
     }
   }
 

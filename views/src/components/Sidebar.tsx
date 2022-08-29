@@ -1,6 +1,7 @@
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Sidebar.module.scss';
 import { Icon } from '~/components/Icon';
@@ -13,6 +14,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = props => {
+  const navigate = useNavigate();
   const { getEmoji } = useEmoji();
   const CSSTransitionRef = React.useRef(null);
   const [maskAnimation, setMaskAnimation] = React.useState(false);
@@ -38,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = props => {
         <main>
           <div className={styles.user_profile}>
             <h2>未登录用户</h2>
-            <p>{getEmoji('People & Body', 19)} 点击这里登录</p>
+            <p onClick={() => navigate('/signIn')}>{getEmoji('People & Body', 19)} 点击这里登录</p>
           </div>
           <ul>
             <li><Link to='/item'><Icon icon='sidebarSummary'/> 数据总览</Link></li>

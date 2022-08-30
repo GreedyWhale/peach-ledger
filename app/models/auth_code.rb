@@ -3,7 +3,7 @@ class AuthCode < ApplicationRecord
   @@scenes = ['signIn']
 
   # 验证邮箱字段，必传
-  validates :email, presence: true
+  validates :email, presence: { message: '邮箱不能为空' }
   # 目前只支持登录类型的验证码
   validates :scene, acceptance: { accept: @@scenes, message: "验证码类型错误，可接受的类型为：#{@@scenes.join(',')}" }
 

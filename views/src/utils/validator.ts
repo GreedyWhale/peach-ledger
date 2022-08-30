@@ -39,3 +39,23 @@ export const validator = <T extends FormData>(formData: T, rules: Rules<T>): Err
 
   return errors;
 };
+
+export const filterErrors = <T>(errors: Errors<T>, reservedKeys: (keyof T)[], mergedKey: keyof T) => {
+  // eslint-disable-next-line no-unused-vars
+  const result = {} as {[key in typeof reservedKeys[number] | typeof mergedKey]: string[]};
+
+  Object.entries(errors).forEach(item => {
+    const [key, value] = item as [keyof T, string[]];
+    const isReservedKey = reservedKeys.includes(key);
+
+    if (isReservedKey) {
+      result[key] = result[key] || [];
+      result[key].push(...value);
+    } else if (key !== mergedKey) {
+      result[mergedKey] = result[mergedKey] || [];
+      result[mergedKey].push(...value);
+    }
+  });
+
+  return result;
+};

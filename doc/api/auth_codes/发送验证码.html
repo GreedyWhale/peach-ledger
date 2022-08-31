@@ -136,7 +136,7 @@ table th, table td {
                     <span class="name">scene</span>
                 </td>
                 <td>
-                  <span class="description">验证码类型</span>
+                  <span class="description">验证码类型：signIn</span>
                 </td>
               </tr>
             </tbody>
@@ -157,7 +157,7 @@ Cookie: </pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"email":"383911973@qq.com"}</pre>
+            <pre class="request body">{"email":"383911973@qq.com","scene":"signIn"}</pre>
 
 
             <h3>Response</h3>
@@ -170,18 +170,20 @@ X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
 Vary: Accept, Accept-Encoding, Origin
-ETag: W/&quot;f2d396cb4862d81504986c037c920429&quot;
+ETag: W/&quot;383b5a33af40bc811883319956bd1b79&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 412a1768-6d01-4133-8c48-5f0352ddc440
-X-Runtime: 0.021059
-Content-Length: 36</pre>
+X-Request-Id: eb83f47b-26a5-47be-887a-f8893bf0d1b9
+X-Runtime: 0.016228
+Content-Length: 63</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;data&quot;: {
   },
-  &quot;message&quot;: &quot;发送成功&quot;
+  &quot;message&quot;: &quot;发送成功&quot;,
+  &quot;status&quot;: 200,
+  &quot;errors&quot;: null
 }</pre>
       </div>
     </div>

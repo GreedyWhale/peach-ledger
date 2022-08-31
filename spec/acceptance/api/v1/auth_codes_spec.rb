@@ -6,10 +6,11 @@ resource "Auth Codes" do
 
   # 请求参数说明
   parameter :email, "邮箱地址", required: true, type: :string
-  parameter :scene, "验证码类型", required: false, type: :string, enum: ['signIn']
+  parameter :scene, "验证码类型：signIn", type: :string, enum: ['signIn']
 
   post "/api/v1/auth_codes" do
     let(:email) { '383911973@qq.com' }
+    let(:scene) { 'signIn' }
     # :document => false 表示这个用例只测试不生成文档
     example "请求参数必须携带 email", :document => false do
       do_request(:email => '')
@@ -20,7 +21,7 @@ resource "Auth Codes" do
     example "目前只支持发送用于登录的验证码", :document => false do
       do_request(:email => :email, :scene => :signUp)
 
-      expect(status).to eq 422
+      expect(status).to eq 400
       expect(JSON.parse(response_body)['errors']['scene']).not_to be_empty
     end
 

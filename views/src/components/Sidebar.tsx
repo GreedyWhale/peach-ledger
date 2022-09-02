@@ -6,6 +6,7 @@ import styles from './Sidebar.module.scss';
 import { Icon } from '~/components/Icon';
 
 import useEmoji from '~/hooks/useEmoji';
+import { useUser } from '~/hooks/useUser';
 
 interface SidebarProps {
   visible: boolean;
@@ -15,6 +16,7 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = props => {
   const navigate = useNavigate();
   const { getEmoji } = useEmoji();
+  const { user, signOut } = useUser();
   const CSSTransitionRef = React.useRef(null);
   const [maskAnimation, setMaskAnimation] = React.useState(false);
 
@@ -38,8 +40,11 @@ export const Sidebar: React.FC<SidebarProps> = props => {
         <div className={styles.mask} data-animate={maskAnimation} onClick={props.onMaskClick}/>
         <main>
           <div className={styles.user_profile}>
-            <h2>未登录用户</h2>
-            <p onClick={() => navigate('/signIn')}>{getEmoji('People & Body', 19)} 点击这里登录</p>
+            <h2>{user?.email || '未登录用户'}</h2>
+            {user
+              ? <p onClick={signOut}>{getEmoji('People & Body', 19)} 点击这里注销</p>
+              : <p onClick={() => navigate('/signIn')}>{getEmoji('People & Body', 19)} 点击这里登录</p>
+            }
           </div>
           <ul>
             <li><Link to='/item'><Icon icon='sidebarSummary'/> 数据总览</Link></li>

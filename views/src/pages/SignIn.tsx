@@ -1,5 +1,6 @@
 import React from 'react';
 import { useImmer } from 'use-immer';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './SignIn.module.scss';
 import { Form, FormItem } from '~/components/Form';
@@ -9,8 +10,11 @@ import { Icon } from '~/components/Icon';
 import { validator, Rules, filterErrors } from '~/utils/validator';
 import { sendAuthCodes } from '~/service/user';
 import { promiseWithAllSettled } from '~/utils/promise';
+import { signIn, useUser } from '~/hooks/useUser';
 
 export const SignIn: React.FC = () => {
+  const navigate = useNavigate();
+  const { refreshUser } = useUser();
   const [formData, setFormData] = useImmer({
     email: '',
     code: '',
@@ -34,7 +38,9 @@ export const SignIn: React.FC = () => {
       return;
     }
 
-    console.log('done');
+    await signIn(formData);
+    await refreshUser();
+    navigate('/home', { replace: true });
   };
 
   const handleSendCode = async () => {

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       get '/emojis', to: 'emojis#index'
       post '/auth_codes', to: 'auth_codes#create'
       post '/sessions', to: 'sessions#create'
-      get '/user', to: 'users#index'
+      get '/users', to: 'users#index'
     end
   end
 end

@@ -2,7 +2,7 @@ import type { Response } from '~/types/request';
 
 import axios, { AxiosError } from 'axios';
 
-import { REQUEST_CODE_NO_RESPONSE, REQUEST_CODE_CODE_ERROR } from '~/utils/constants';
+import { REQUEST_CODE_NO_RESPONSE, REQUEST_CODE_CODE_ERROR, LOCAL_TOKEN } from '~/utils/constants';
 import { showDialog } from '~/components/Dialog';
 import { Icon } from '~/components/Icon';
 
@@ -10,6 +10,14 @@ const axiosInstance = axios.create({
   baseURL: 'http://127.0.0.1:3000',
   timeout: 30000,
   showErrorDialog: true,
+});
+
+let dialogLock = false;
+
+axiosInstance.interceptors.request.use(config => {
+  config.headers = config.headers || {};
+  config.headers.Authorization = `Bearer ${window.localStorage.getItem(LOCAL_TOKEN)}`;
+  return config;
 });
 
 axiosInstance.interceptors.response.use(response => ({
@@ -55,10 +63,14 @@ axiosInstance.interceptors.response.use(response => ({
     };
   }
 
-  if (error.config.showErrorDialog) {
+  if (error.config.showErrorDialog && !dialogLock) {
+    dialogLock = true;
     showDialog({
       icon: <Icon icon='danger' color='#FF4C29' />,
       content: result.message,
+      onDestroyed() {
+        dialogLock = false;
+      },
     });
   }
 

@@ -10,6 +10,7 @@ class ValidateJwt
     white_list = [
       '/api/v1/emojis',
       '/api/v1/auth_codes',
+      '/api/v1/sessions'
     ]
     return @app.call(env) if white_list.include?(env['PATH_INFO'])
 

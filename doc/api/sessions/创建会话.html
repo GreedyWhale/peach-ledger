@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Auth Codes API</title>
+    <title>Sessions API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,13 +106,13 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Auth Codes API</h1>
+      <h1>Sessions API</h1>
 
-        <p class="explanation">发送邮件验证码</p>
+        <p class="explanation">创建用户登录会话</p>
 
       <div class="article">
-        <h2>发送验证码</h2>
-        <h3>POST /api/v1/auth_codes</h3>
+        <h2>创建会话</h2>
+        <h3>POST /api/v1/sessions</h3>
 
           <h3>Parameters</h3>
           <table class="parameters table table-striped table-bordered table-condensed">
@@ -132,11 +132,11 @@ table th, table td {
                 </td>
               </tr>
               <tr>
-                <td>
-                    <span class="name">scene</span>
+                <td class="required">
+                    <span class="name">code</span>
                 </td>
                 <td>
-                  <span class="description">验证码类型：signIn</span>
+                  <span class="description">验证码</span>
                 </td>
               </tr>
             </tbody>
@@ -153,11 +153,11 @@ Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/auth_codes</pre>
+          <pre class="request route highlight">POST /api/v1/sessions</pre>
 
 
             <h4>Body</h4>
-            <pre class="request body">{"email":"383911973@qq.com","scene":"signIn"}</pre>
+            <pre class="request body">{"email":"test@qq.com","code":"123456"}</pre>
 
 
             <h3>Response</h3>
@@ -170,18 +170,19 @@ X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
 Vary: Accept, Accept-Encoding, Origin
-ETag: W/&quot;383b5a33af40bc811883319956bd1b79&quot;
+ETag: W/&quot;604347740bcfb158392f93baa2e19d5e&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: e7458ca1-8d06-473f-bc35-e51716836f77
-X-Runtime: 0.011642
-Content-Length: 63</pre>
+X-Request-Id: fabf1ba1-b4a5-4d4d-8785-10f66d682f82
+X-Runtime: 0.015949
+Content-Length: 180</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;data&quot;: {
+    &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1MywiZXhwIjoxNjYyNjkyNTY1fQ.BXzhR0-UNtwvkFvguUEgiVA2bCIT5VkR5iXCHvJJhHo&quot;
   },
-  &quot;message&quot;: &quot;发送成功&quot;,
+  &quot;message&quot;: &quot;请求成功&quot;,
   &quot;status&quot;: 200,
   &quot;errors&quot;: null
 }</pre>

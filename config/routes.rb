@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/emojis', to: 'emojis#index'
       post '/auth_codes', to: 'auth_codes#create'
+      post '/sessions', to: 'sessions#create'
     end
   end
 end

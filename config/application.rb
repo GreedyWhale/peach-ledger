@@ -14,6 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 # require "rails/test_unit/railtie"
 require_relative "../lib/middleware/validate_jwt"
+require_relative "../lib/middleware/get_user"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -39,5 +40,6 @@ module PeachLedger
     # 开启gzip
     config.middleware.use Rack::Deflater
     config.middleware.use ValidateJwt
+    config.middleware.use GetUser
   end
 end

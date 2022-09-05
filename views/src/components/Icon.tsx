@@ -19,7 +19,8 @@ export interface IconProps {
   | 'date'
   | 'triangle'
   | 'addSquare'
-  | 'danger';
+  | 'danger'
+  | 'tip';
   className?: string;
   onClick?: () => void;
   color?: string;

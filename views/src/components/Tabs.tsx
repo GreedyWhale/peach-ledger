@@ -17,6 +17,7 @@ type Action = { type: 'updateActiveKey', payload: Store['activeKey'] }
 interface TabsProps {
   activeKey: TabsItem['key'];
   className?: string;
+  onClick?: (_key: TabsItem['key']) => void;
 }
 
 interface TabPaneProps {
@@ -65,7 +66,12 @@ export const TabsInner: React.FC<React.PropsWithChildren<TabsProps>> = props => 
           <li
             key={value.key}
             data-active={store.activeKey === value.key}
-            onClick={() => storeReducer({ type: 'updateActiveKey', payload: value.key })}
+            onClick={() => {
+              storeReducer({ type: 'updateActiveKey', payload: value.key });
+              if (props.onClick) {
+                props.onClick(value.key);
+              }
+            }}
           >
             {value.tab}
           </li>

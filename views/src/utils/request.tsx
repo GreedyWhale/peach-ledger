@@ -24,6 +24,16 @@ axiosInstance.interceptors.response.use(response => ({
   ...response.data,
   code: response.status,
 }), (error: AxiosError<Response<unknown>>) => {
+  let result: Response<unknown> = {
+    data: null,
+    code: 0,
+    message: '',
+  };
+
+  if (axios.isCancel(error)) {
+    return Promise.reject(error);
+  }
+
   if (error.config.retry) {
     error.config.__retry = error.config.__retry || 0;
 
@@ -38,11 +48,6 @@ axiosInstance.interceptors.response.use(response => ({
     }
   }
 
-  let result: Response<unknown> = {
-    data: null,
-    code: 0,
-    message: '',
-  };
   if (error.response) { // 服务器响应码不在2xx范围
     result = {
       ...error.response.data,

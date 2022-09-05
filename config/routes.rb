@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post '/auth_codes', to: 'auth_codes#create'
       post '/sessions', to: 'sessions#create'
       get '/users', to: 'users#index'
+      resources :tags
     end
   end
 end

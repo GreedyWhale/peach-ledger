@@ -248,4 +248,16 @@
       </g>
     </g>
   </symbol>
+  <symbol stroke-miterlimit="10" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsVectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" id="tip">
+    <defs></defs>
+    <g id="图层-1" vectornatorLayerName="图层 1">
+      <g opacity="1">
+        <path d="M250 7.5C383.93 7.5 492.5 116.07 492.5 250C492.5 383.93 383.93 492.5 250 492.5C116.07 492.5 7.5 383.93 7.5 250C7.5 116.07 116.07 7.5 250 7.5Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="12"></path>
+        <path d="M250 46.6129C362.324 46.6129 453.387 137.676 453.387 250" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="12"></path>
+        <path d="M250 453.387C137.676 453.387 46.6129 362.324 46.6129 250" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="12"></path>
+        <path d="M250 343.222C267.64 343.222 281.94 357.521 281.94 375.161C281.94 392.801 267.64 407.101 250 407.101C232.36 407.101 218.06 392.801 218.06 375.161C218.06 357.521 232.36 343.222 250 343.222Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="12"></path>
+        <path d="M280.649 140.484C280.649 162.09 283.207 312.581 250 312.581C216.793 312.581 219.351 162.09 219.351 140.484C219.351 118.878 233.072 101.371 250 101.371C266.928 101.371 280.649 118.878 280.649 140.484Z" fill="none" opacity="1" stroke="currentColor" stroke-linecap="butt" stroke-linejoin="round" stroke-width="12"></path>
+      </g>
+    </g>
+  </symbol>
 </svg>

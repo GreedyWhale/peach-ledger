@@ -16,7 +16,6 @@ class Api::V1::AuthCodesController < ApplicationController
     end
 
     if auth_code.errors[:email].any?
-      p auth_code.errors[:errors]
       send_response({}, :'发送失败，邮箱不能为空', 422, auth_code.errors)
       return;
     end

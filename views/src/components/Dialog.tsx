@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import styles from './Dialog.module.scss';
+import { Icon } from '~/components/Icon';
 
 interface DialogProps {
   content: React.ReactNode;
@@ -14,7 +15,9 @@ export const Dialog: React.FC<DialogProps> = props => (
   <div className={styles.container}>
     <div className={styles.mask} onClick={() => props.onDestroyed?.(-1)}/>
     <main>
-      {props.icon && <div className={styles.icon_wrap}>{props.icon}</div>}
+      <div className={styles.icon_wrap}>
+        {props.icon || <Icon icon='tip' className={styles.tip_icon} />}
+      </div>
       <div className={styles.content}>{props.content}</div>
       <div className={styles.buttons}>
         {props.buttons?.map((button, index) => (

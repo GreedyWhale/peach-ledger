@@ -5,10 +5,20 @@ import styles from './Home.module.scss';
 import { Icon } from '~/components/Icon';
 import { Button } from '~/components/Button';
 
+import { useUser } from '~/hooks/useUser';
+
 export const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { showSignInDialog } = useUser();
 
-  const toItemCreatePage = () => navigate('/item/create');
+  const toItemCreatePage = () => {
+    if (showSignInDialog()) {
+      return;
+    }
+
+    navigate('/item/create');
+  };
+
   return (
     <div className={styles.container}>
       <Icon icon='logo' className={styles.logo} />

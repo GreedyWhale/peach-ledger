@@ -9,6 +9,7 @@ import { DatePicker } from '~/components/DatePicker';
 
 import { formatDate } from '~/utils/date';
 import { showEmoji } from '~/hooks/useEmoji';
+import { getTags, TagsResponse, AccountType } from '~/service/tags';
 
 const calculatorButtons = [
   { value: '1' },
@@ -27,28 +28,9 @@ const calculatorButtons = [
   { value: '.' },
 ];
 
-const fakeTags = [
-  { id: 1, sign: ['1F34B'], name: '测试' },
-  { id: 2, sign: ['1F34B'], name: '测试' },
-  { id: 3, sign: ['1F34B'], name: '测试' },
-  { id: 4, sign: ['1F34B'], name: '测试' },
-  { id: 5, sign: ['1F34B'], name: '测试' },
-  { id: 6, sign: ['1F34B'], name: '测试' },
-  { id: 7, sign: ['1F34B'], name: '测试' },
-  { id: 8, sign: ['1F34B'], name: '测试' },
-  { id: 9, sign: ['1F34B'], name: '测试' },
-  { id: 10, sign: ['1F34B'], name: '测试' },
-  { id: 11, sign: ['1F34B'], name: '测试' },
-  { id: 12, sign: ['1F34B'], name: '测试' },
-  { id: 13, sign: ['1F34B'], name: '测试' },
-  { id: 14, sign: ['1F34B'], name: '测试' },
-  { id: 15, sign: ['1F34B'], name: '测试' },
-  { id: 16, sign: ['1F34B'], name: '测试' },
-  { id: 17, sign: ['1F34B'], name: '测试' },
-  { id: 18, sign: ['1F34B'], name: '测试' },
-  { id: 19, sign: ['1F34B'], name: '测试' },
-  { id: 20, sign: ['1F34B'], name: '测试' },
-  { id: 21, sign: ['1F34B'], name: '测试' },
+const tabs = [
+  { category: 'expenses', tab: '支出' },
+  { category: 'income', tab: '收入' },
 ];
 
 export const ItemCreate: React.FC = () => {
@@ -62,6 +44,9 @@ export const ItemCreate: React.FC = () => {
     },
     date: formatDate(),
   });
+  const [activatedTabKey, setActivatedTabKey] = React.useState<AccountType>('expenses');
+  const [expensesTags, setExpensesTags] = React.useState<TagsResponse>([]);
+  const [incomeTags, setIncomeTags] = React.useState<TagsResponse>([]);
 
   const handleCalculator = (value: string | 'delete' | 'clear' | 'submit') => {
     const dotReg = /\./gm;
@@ -135,25 +120,68 @@ export const ItemCreate: React.FC = () => {
     setDataPickerVisible(false);
   };
 
+  React.useEffect(() => {
+    let abort = false;
+    const abortController = new AbortController();
+    getTags(activatedTabKey, abortController.signal)
+      .then(res => {
+        if (abort) {
+          return;
+        }
+
+        if (activatedTabKey === 'expenses') {
+          setExpensesTags(res.data);
+        }
+
+        if (activatedTabKey === 'income') {
+          setIncomeTags(res.data);
+        }
+      });
+
+    return () => {
+      abortController.abort();
+      abort = true;
+    };
+  }, [activatedTabKey]);
+
   return (
     <div className={styles.container}>
-      <Tabs activeKey='expenditure' className={styles.tabs}>
-        <TabPane dataKey='expenditure' tab='支出'>
-          <ul className={styles.tags}>
-            <li>
-              <span>
-                <Icon icon='addSquare' className={styles.add_icon} onClick={() => navigate('/tag/create')}/>
-              </span>
-            </li>
-            {fakeTags.map(tag => (
-              <li key={tag.id}>
-                <span>{showEmoji(tag.sign)}</span>
-                <span>{tag.name}</span>
+      <Tabs
+        activeKey={activatedTabKey}
+        className={styles.tabs}
+        onClick={key => setActivatedTabKey(key as AccountType)}
+      >
+        {tabs.map(item => (
+          <TabPane dataKey={item.category} tab={item.tab} key={item.category}>
+            <ul className={styles.tags}>
+              <li>
+                <span>
+                  <Icon
+                    icon='addSquare'
+                    className={styles.add_icon}
+                    onClick={() => navigate(`/tag/create?category=${item.category}`)}
+                  />
+                </span>
               </li>
-            ))}
-          </ul>
-        </TabPane>
-        <TabPane dataKey='income' tab='收入'>收入</TabPane>
+              {item.category === 'expenses' && (
+                expensesTags.map(tag => (
+                  <li key={tag.id}>
+                    <span>{showEmoji(tag.emoji)}</span>
+                    <span>{tag.name}</span>
+                  </li>
+                ))
+              )}
+              {item.category === 'income' && (
+                incomeTags.map(tag => (
+                  <li key={tag.id}>
+                    <span>{showEmoji(tag.emoji)}</span>
+                    <span>{tag.name}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </TabPane>
+        ))}
       </Tabs>
       <div className={styles.calculator}>
         <div className={styles.calculator_screen}>

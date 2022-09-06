@@ -6,6 +6,7 @@ import styles from './ItemCreate.module.scss';
 import { Tabs, TabPane } from '~/components/Tabs';
 import { Icon } from '~/components/Icon';
 import { DatePicker } from '~/components/DatePicker';
+import { FormItem } from '~/components/Form';
 
 import { formatDate } from '~/utils/date';
 import { showEmoji } from '~/hooks/useEmoji';
@@ -43,10 +44,12 @@ export const ItemCreate: React.FC = () => {
       emoji: '',
     },
     date: formatDate(),
+    note: '',
   });
   const [activatedTabKey, setActivatedTabKey] = React.useState<AccountType>('expenses');
   const [expensesTags, setExpensesTags] = React.useState<TagsResponse>([]);
   const [incomeTags, setIncomeTags] = React.useState<TagsResponse>([]);
+  const longPressTimer = React.useRef(-1);
 
   const handleCalculator = (value: string | 'delete' | 'clear' | 'submit') => {
     const dotReg = /\./gm;
@@ -120,6 +123,17 @@ export const ItemCreate: React.FC = () => {
     setDataPickerVisible(false);
   };
 
+  const handleTouchStart = (id: number) => {
+    handleTouchEnd();
+    longPressTimer.current = window.setTimeout(() => {
+      navigate(`/tag/update/${id}`);
+    }, 2000);
+  };
+
+  const handleTouchEnd = () => {
+    window.clearTimeout(longPressTimer.current);
+  };
+
   React.useEffect(() => {
     let abort = false;
     const abortController = new AbortController();
@@ -165,7 +179,11 @@ export const ItemCreate: React.FC = () => {
               </li>
               {item.category === 'expenses' && (
                 expensesTags.map(tag => (
-                  <li key={tag.id}>
+                  <li
+                    key={tag.id}
+                    onTouchStart={() => handleTouchStart(tag.id)}
+                    onTouchEnd={handleTouchEnd}
+                  >
                     <span>{showEmoji(tag.emoji)}</span>
                     <span>{tag.name}</span>
                   </li>
@@ -173,7 +191,11 @@ export const ItemCreate: React.FC = () => {
               )}
               {item.category === 'income' && (
                 incomeTags.map(tag => (
-                  <li key={tag.id}>
+                  <li
+                    key={tag.id}
+                    onTouchStart={() => handleTouchStart(tag.id)}
+                    onTouchEnd={handleTouchEnd}
+                  >
                     <span>{showEmoji(tag.emoji)}</span>
                     <span>{tag.name}</span>
                   </li>
@@ -184,6 +206,14 @@ export const ItemCreate: React.FC = () => {
         ))}
       </Tabs>
       <div className={styles.calculator}>
+        <FormItem
+          className={styles.item_note}
+          type='text'
+          label='备注：'
+          value={formData.note}
+          onChange={event => setFormData(draft => { draft.note = event.target.value; })}
+          placeholder='账目备注，选填'
+        />
         <div className={styles.calculator_screen}>
           <div onClick={() => setDataPickerVisible(prev => !prev)}>
             <Icon icon='date' className={styles.calculator_date_icon} />

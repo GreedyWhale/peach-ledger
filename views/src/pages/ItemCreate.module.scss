@@ -11,7 +11,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2em;
+      padding: 0 2em 0 20px;
       height: 4em;
       margin-bottom: 2px;
       background: var(--theme-main-color);
@@ -64,7 +64,7 @@
     align-items: flex-start;
     align-content: flex-start;
     padding: 20px 0;
-    height: 600px;
+    height: 520px;
     overflow-y: auto;
     > li {
       width: 20%;
@@ -95,5 +95,9 @@
         color: var(--theme-green);
       }
     }
+  }
+  .item_note {
+    margin-bottom: 0;
+    padding-left: 20px;
   }
 }

@@ -19,7 +19,6 @@ export const getTag = (id: number, signal?: AbortSignal) => request.get<TagsResp
 export const createTag = (params: {
   name: string;
   emoji: string[];
-  user_id: number;
   category: AccountType;
 }) => request.post(apiTags, params);
 export const updateTag = (

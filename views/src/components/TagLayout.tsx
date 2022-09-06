@@ -40,7 +40,7 @@ const storeAtom = atomWithImmer<Store>({
 
 export const TagLayoutInner: React.FC<React.PropsWithChildren<TagLayoutProps>> = props => {
   const navigate = useNavigate();
-  const { user, showSignInDialog } = useUser();
+  const { showSignInDialog } = useUser();
   const [store, setStore] = useAtom(storeAtom, tagLayoutScope);
   const { category, id } = useParams<{ category: AccountType, id: string }>();
 
@@ -74,7 +74,6 @@ export const TagLayoutInner: React.FC<React.PropsWithChildren<TagLayoutProps>> =
       await createTag({
         name: store.name,
         emoji: store.emoji,
-        user_id: user!.id,
         category: category || 'expenses',
       });
 

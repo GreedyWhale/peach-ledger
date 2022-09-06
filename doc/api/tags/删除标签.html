@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sessions API</title>
+    <title>Tags API</title>
     <meta charset="utf-8">
     <style>
       
@@ -106,16 +106,17 @@ table th, table td {
   </head>
   <body>
     <div class="container">
-      <h1>Sessions API</h1>
+      <h1>Tags API</h1>
 
-        <p class="explanation">创建用户登录会话</p>
+        <p class="explanation">标签的增、删、改、查</p>
 
       <div class="article">
-        <h2>创建会话</h2>
-        <h3>POST /api/v1/sessions</h3>
+        <h2>删除标签</h2>
+        <h3>DELETE /api/v1/tags/:id</h3>
 
-          <h3>Parameters</h3>
-          <table class="parameters table table-striped table-bordered table-condensed">
+
+          <h3>Response Fields</h3>
+          <table class="response-fields table table-striped table-bordered table-condensed">
             <thead>
               <tr>
                 <th>Name</th>
@@ -124,40 +125,94 @@ table th, table td {
             </thead>
             <tbody>
               <tr>
-                <td class="required">
-                    <span class="name">email</span>
+                <td>
+                    <span class="name">data[id]</span>
                 </td>
                 <td>
-                  <span class="description">邮箱地址</span>
+                  <span class="description">id</span>
                 </td>
               </tr>
               <tr>
-                <td class="required">
-                    <span class="name">code</span>
+                <td>
+                    <span class="name">data[user_id]</span>
                 </td>
                 <td>
-                  <span class="description">验证码</span>
+                  <span class="description">用户id</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[name]</span>
+                </td>
+                <td>
+                  <span class="description">标签名</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[category]</span>
+                </td>
+                <td>
+                  <span class="description">标签类型，可能的值有：&quot;expenses&quot;、&quot;income&quot;</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[deleted]</span>
+                </td>
+                <td>
+                  <span class="description">是否删除</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[emoji]</span>
+                </td>
+                <td>
+                  <span class="description">标签符号</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[created_at]</span>
+                </td>
+                <td>
+                  <span class="description">创建时间</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[deleted_at]</span>
+                </td>
+                <td>
+                  <span class="description">删除时间</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">data[updated_at]</span>
+                </td>
+                <td>
+                  <span class="description">更新时间时间</span>
                 </td>
               </tr>
             </tbody>
           </table>
 
-
           <h3>Request</h3>
 
             <h4>Headers</h4>
             <pre class="request headers">Version: HTTP/1.0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMjcsImV4cCI6MTY2MzA0MjU0NH0.U_aMuApEIGkNgTMajJ-LoRd3ViBJ_ZC5b9LWTyMV5EE
 Accept: application/json
 Content-Type: application/json
 Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">POST /api/v1/sessions</pre>
+          <pre class="request route highlight">DELETE /api/v1/tags/615</pre>
 
 
-            <h4>Body</h4>
-            <pre class="request body">{"email":"test@qq.com","code":"123456"}</pre>
 
 
             <h3>Response</h3>
@@ -170,17 +225,26 @@ X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
 Vary: Accept, Accept-Encoding, Origin
-ETag: W/&quot;6ce5ccee13083341ba673b748c8cd905&quot;
+ETag: W/&quot;c62e8a10f52ec10a5967b56b7f33ca2c&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 625a77fa-c558-4859-9dc1-fcf891b4cfae
-X-Runtime: 0.012300
-Content-Length: 181</pre>
+X-Request-Id: 6ed51be8-bb94-43a5-93c2-ffcebcf64736
+X-Runtime: 0.003456
+Content-Length: 242</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;data&quot;: {
-    &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMjIsImV4cCI6MTY2MzA0MjU0NH0.riPxcVayw7Mgk0t7dse5Ovfe4_97LERqbfJ3Dil5sN0&quot;
+    &quot;deleted&quot;: true,
+    &quot;id&quot;: 615,
+    &quot;name&quot;: &quot;测试标签&quot;,
+    &quot;emoji&quot;: [
+      &quot;1F38C&quot;
+    ],
+    &quot;category&quot;: &quot;expenses&quot;,
+    &quot;created_at&quot;: &quot;2022-09-06T04:15:44.272Z&quot;,
+    &quot;updated_at&quot;: &quot;2022-09-06T04:15:44.275Z&quot;,
+    &quot;user_id&quot;: 227
   },
   &quot;message&quot;: &quot;请求成功&quot;,
   &quot;status&quot;: 200,

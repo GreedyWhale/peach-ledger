@@ -22,7 +22,8 @@ class Api::V1::TagsController < ApplicationController
 
   def update
     tag = Tag.find(params[:id])
-    tag.update(params.permit(:name, :emoji))
+    # https://stackoverflow.com/questions/16549382/how-to-permit-an-array-with-strong-parameters
+    tag.update(params.permit(:name, :emoji => []))
 
     return send_response({}, :'更新失败', 422, tag.errors) if tag.errors.any?
     send_response(tag)
@@ -36,7 +37,7 @@ class Api::V1::TagsController < ApplicationController
   end
 
   def destroy
-    tag = Tag.find_by(id: params[:id].to_i)
+    tag = Tag.find_by(id: params[:id].to_i, user_id: request.env['user'].id)
     tag.update(deleted: true)
 
     return send_response({}, :'删除失败', 422, tag.errors) if tag.errors.any?

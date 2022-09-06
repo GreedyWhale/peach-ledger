@@ -16,13 +16,30 @@ class Api::V1::TagsController < ApplicationController
       deleted: false,
     )
 
-    return send_response(tag, '创建成功', 200) if tag.save
-    return send_response({}, '创建失败', 422, tag.errors) if tag.errors.any?
+    return send_response({}, :'创建失败', 422, tag.errors) if tag.errors.any?
+    send_response(tag) if tag.save
   end
 
   def update
-    tag = Tag.find(id: params[:id])
+    tag = Tag.find(params[:id])
+    tag.update(params.permit(:name, :emoji))
 
-    p tag
+    return send_response({}, :'更新失败', 422, tag.errors) if tag.errors.any?
+    send_response(tag)
+  end
+
+  def show
+    tag = Tag.find_by(id: params[:id].to_i)
+
+    return send_response({}, :'标签不存在', 404) if tag.nil?
+    send_response(tag)
+  end
+
+  def destroy
+    tag = Tag.find_by(id: params[:id].to_i)
+    tag.update(deleted: true)
+
+    return send_response({}, :'删除失败', 422, tag.errors) if tag.errors.any?
+    send_response(tag)
   end
 end

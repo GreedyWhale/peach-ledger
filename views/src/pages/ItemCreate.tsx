@@ -159,7 +159,7 @@ export const ItemCreate: React.FC = () => {
                   <Icon
                     icon='addSquare'
                     className={styles.add_icon}
-                    onClick={() => navigate(`/tag/create?category=${item.category}`)}
+                    onClick={() => navigate(`/tag/create/${item.category}`)}
                   />
                 </span>
               </li>

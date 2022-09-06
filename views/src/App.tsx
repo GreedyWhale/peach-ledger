@@ -27,8 +27,8 @@ function App() {
           <Route path='chart' element={<ItemCharts />} />
         </Route>
         <Route path='/tag'>
-          <Route path='create' element={<TagCreate />} />
-          <Route path='update' element={<TagUpdate />} />
+          <Route path='create/:category' element={<TagCreate />} />
+          <Route path='update/:id' element={<TagUpdate />} />
         </Route>
         <Route path='/signIn' element={<SignIn />} />
       </Route>

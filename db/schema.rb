@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_05_081439) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_07_075629) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_081439) do
     t.datetime "updated_at", null: false
     t.string "scene", limit: 64, default: "signIn"
     t.boolean "used", default: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name", limit: 64, null: false
+    t.string "note", limit: 128
+    t.string "category", limit: 64, default: "expenses"
+    t.integer "amount", null: false
+    t.bigint "user_id"
+    t.bigint "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "date"
+    t.index ["tag_id"], name: "index_items_on_tag_id"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -40,5 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_081439) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "items", "tags"
+  add_foreign_key "items", "users"
   add_foreign_key "tags", "users"
 end

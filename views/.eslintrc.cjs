@@ -34,4 +34,7 @@ module.exports = {
     'brace-style': ['error', '1tbs', { allowSingleLine: true }],
     'max-statements-per-line': ['error', { max: 2 }],
   },
+  globals: {
+    AsyncReturnType: 'readonly',
+  },
 };

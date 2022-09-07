@@ -7,10 +7,22 @@ import { Tabs, TabPane } from '~/components/Tabs';
 import { Icon } from '~/components/Icon';
 import { DatePicker } from '~/components/DatePicker';
 import { FormItem } from '~/components/Form';
+import { showDialog } from '~/components/Dialog';
 
 import { formatDate } from '~/utils/date';
 import { showEmoji } from '~/hooks/useEmoji';
 import { getTags, TagsResponse, AccountType } from '~/service/tags';
+import { createItem } from '~/service/items';
+import { Rules, validator } from '~/utils/validator';
+import { promiseWithAllSettled } from '~/utils/promise';
+
+interface FormData {
+  amount: string;
+  tag: { id: number; name: string; };
+  date: string;
+  note: string;
+  category: AccountType;
+}
 
 const calculatorButtons = [
   { value: '1' },
@@ -34,27 +46,65 @@ const tabs = [
   { category: 'income', tab: '收入' },
 ];
 
+const rules: Rules<FormData> = [
+  { key: 'amount', required: amount => parseFloat(amount as string) > 0, message: '金额必须大于0' },
+  { key: 'tag', required: tag => Boolean((tag as FormData['tag']).name), message: '标签不能为空' },
+];
+
 export const ItemCreate: React.FC = () => {
   const navigate = useNavigate();
   const [dataPickerVisible, setDataPickerVisible] = React.useState(false);
-  const [formData, setFormData] = useImmer({
+  const [formData, setFormData] = useImmer<FormData>({
     amount: '0',
-    tag: {
-      name: '',
-      emoji: '',
-    },
+    tag: { id: 0, name: '' },
     date: formatDate(),
     note: '',
+    category: 'expenses',
   });
-  const [activatedTabKey, setActivatedTabKey] = React.useState<AccountType>('expenses');
   const [expensesTags, setExpensesTags] = React.useState<TagsResponse>([]);
   const [incomeTags, setIncomeTags] = React.useState<TagsResponse>([]);
   const longPressTimer = React.useRef(-1);
+  const displayList = React.useMemo(() => formData.category === 'expenses' ? expensesTags : incomeTags, [formData.category, expensesTags, incomeTags]);
+
+  const handleCreateItem = async () => {
+    const errors = validator(formData, rules);
+
+    if (errors) {
+      const message = Object.values(errors)[0][0];
+      showDialog({ content: message });
+      return;
+    }
+
+    const result = await promiseWithAllSettled(createItem({
+      name: formData.tag.name,
+      tag_id: formData.tag.id,
+      category: formData.category,
+      date: `${Math.floor(new Date(formData.date).getTime() / 1000)}`,
+      amount: parseFloat(formData.amount) * 100,
+      note: formData.note,
+    }));
+
+    if (result.status === 'rejected') {
+      const [key, value] = Object.entries(result.reason.errors!)[0];
+      showDialog({ content: `${key}: ${value[0]}` });
+      return;
+    }
+
+    showDialog({ content: '创建成功' });
+    setFormData(draft => {
+      Object.assign(draft, {
+        amount: '0',
+        tag: { id: 0, name: '' },
+        date: formatDate(),
+        note: '',
+      });
+    });
+  };
 
   const handleCalculator = (value: string | 'delete' | 'clear' | 'submit') => {
     const dotReg = /\./gm;
     if (value === 'submit') {
-      console.log('submit');
+      handleCreateItem();
       return;
     }
 
@@ -137,17 +187,17 @@ export const ItemCreate: React.FC = () => {
   React.useEffect(() => {
     let abort = false;
     const abortController = new AbortController();
-    getTags(activatedTabKey, abortController.signal)
+    getTags(formData.category, abortController.signal)
       .then(res => {
         if (abort) {
           return;
         }
 
-        if (activatedTabKey === 'expenses') {
+        if (formData.category === 'expenses') {
           setExpensesTags(res.data);
         }
 
-        if (activatedTabKey === 'income') {
+        if (formData.category === 'income') {
           setIncomeTags(res.data);
         }
       });
@@ -156,14 +206,14 @@ export const ItemCreate: React.FC = () => {
       abortController.abort();
       abort = true;
     };
-  }, [activatedTabKey]);
+  }, [formData.category]);
 
   return (
     <div className={styles.container}>
       <Tabs
-        activeKey={activatedTabKey}
+        activeKey={formData.category}
         className={styles.tabs}
-        onClick={key => setActivatedTabKey(key as AccountType)}
+        onClick={key => setFormData(draft => { draft.category = key as AccountType; })}
       >
         {tabs.map(item => (
           <TabPane dataKey={item.category} tab={item.tab} key={item.category}>
@@ -177,30 +227,17 @@ export const ItemCreate: React.FC = () => {
                   />
                 </span>
               </li>
-              {item.category === 'expenses' && (
-                expensesTags.map(tag => (
-                  <li
-                    key={tag.id}
-                    onTouchStart={() => handleTouchStart(tag.id)}
-                    onTouchEnd={handleTouchEnd}
-                  >
-                    <span>{showEmoji(tag.emoji)}</span>
-                    <span>{tag.name}</span>
-                  </li>
-                ))
-              )}
-              {item.category === 'income' && (
-                incomeTags.map(tag => (
-                  <li
-                    key={tag.id}
-                    onTouchStart={() => handleTouchStart(tag.id)}
-                    onTouchEnd={handleTouchEnd}
-                  >
-                    <span>{showEmoji(tag.emoji)}</span>
-                    <span>{tag.name}</span>
-                  </li>
-                ))
-              )}
+              {displayList.map(tag => (
+                <li
+                  key={tag.id}
+                  onTouchStart={() => handleTouchStart(tag.id)}
+                  onTouchEnd={handleTouchEnd}
+                  onClick={() => setFormData(draft => { draft.tag = { id: tag.id, name: tag.name }; })}
+                >
+                  <span data-selected={tag.id === formData.tag.id}>{showEmoji(tag.emoji)}</span>
+                  <span>{tag.name}</span>
+                </li>
+              ))}
             </ul>
           </TabPane>
         ))}

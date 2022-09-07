@@ -5,9 +5,7 @@ class Api::V1::TagsController < ApplicationController
   end
 
   def create
-    user_id = request.env['user'].id;
-    return send_response({}, :unauthorized, 401) unless user_id
-
+    user_id = request.env['user'].id
     tag = Tag.new(
       user_id: user_id,
       name: params[:name],
@@ -16,8 +14,8 @@ class Api::V1::TagsController < ApplicationController
       deleted: false,
     )
 
-    return send_response({}, :'创建失败', 422, tag.errors) if tag.errors.any?
-    send_response(tag) if tag.save
+    return send_response({}, :'创建失败', 422, tag.errors) unless tag.save
+    send_response(tag)
   end
 
   def update

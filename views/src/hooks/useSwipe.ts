@@ -1,11 +1,11 @@
 import React from 'react';
 
 interface UseSwipeParams {
-  elementRef: React.RefObject<HTMLElement>,
-  onSwipeLeft?: () => void;
-  onSwipeRight?: () => void;
-  onSwipeTop?: () => void;
-  onSwipeBottom?: () => void;
+  elementRef: React.RefObject<HTMLElement | null> | React.RefObject<(HTMLElement | null)[]>,
+  onSwipeLeft?: (_index?: number) => void;
+  onSwipeRight?: (_index?: number) => void;
+  onSwipeTop?: (_index?: number) => void;
+  onSwipeBottom?: (_index?: number) => void;
 }
 
 export default function useSwipe(params: UseSwipeParams) {
@@ -23,7 +23,7 @@ export default function useSwipe(params: UseSwipeParams) {
     event.preventDefault();
   }, []);
 
-  const handleTouchEnd = React.useCallback((event: TouchEvent) => {
+  const handleTouchEnd = React.useCallback((event: TouchEvent, index?: number) => {
     const { clientX, clientY } = event.changedTouches[0];
     const offsetX = clientX - startPoint.current.x;
     const offsetY = clientY - startPoint.current.y;
@@ -36,11 +36,11 @@ export default function useSwipe(params: UseSwipeParams) {
 
       // 右滑
       if (offsetX > 0) {
-        params.onSwipeRight?.();
+        params.onSwipeRight?.(index);
         return;
       }
 
-      params.onSwipeLeft?.();
+      params.onSwipeLeft?.(index);
     }
 
     // 垂直方向
@@ -50,15 +50,32 @@ export default function useSwipe(params: UseSwipeParams) {
 
     // 下滑
     if (offsetY > 0) {
-      params.onSwipeBottom?.();
+      params.onSwipeBottom?.(index);
       return;
     }
 
-    params.onSwipeTop?.();
+    params.onSwipeTop?.(index);
   }, [params]);
 
-  React.useEffect(() => {
+  const bindLinteners = React.useCallback(() => {
     const _elementRef = params.elementRef.current;
+    if (Array.isArray(_elementRef)) {
+      const handleTouchEndList = _elementRef.map((element, index) => (event: TouchEvent) => handleTouchEnd(event, index));
+      _elementRef.forEach((element, index) => {
+        element?.addEventListener('touchstart', handleTouchStart);
+        element?.addEventListener('touchend', handleTouchEndList[index]);
+        element?.addEventListener('touchmove', handleTouchMove);
+      });
+
+      return () => {
+        _elementRef.forEach((element, index) => {
+          element?.removeEventListener('touchstart', handleTouchStart);
+          element?.removeEventListener('touchend', handleTouchEndList[index]);
+          element?.removeEventListener('touchmove', handleTouchMove);
+        });
+      };
+    }
+
     if (_elementRef) {
       _elementRef.addEventListener('touchstart', handleTouchStart);
       _elementRef.addEventListener('touchend', handleTouchEnd);
@@ -72,5 +89,10 @@ export default function useSwipe(params: UseSwipeParams) {
         _elementRef.removeEventListener('touchmove', handleTouchMove);
       }
     };
-  }, [params.elementRef, handleTouchEnd, handleTouchStart, handleTouchMove]);
+  }, [handleTouchEnd, handleTouchMove, handleTouchStart, params.elementRef]);
+
+  React.useEffect(() => {
+    const unSubscribe = bindLinteners();
+    return unSubscribe;
+  }, [bindLinteners]);
 }

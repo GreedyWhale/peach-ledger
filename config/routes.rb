@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       post '/sessions', to: 'sessions#create'
       get '/users', to: 'users#index'
       resources :tags
+      resources :items
     end
   end
 end

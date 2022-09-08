@@ -48,7 +48,7 @@ export const Sidebar: React.FC<SidebarProps> = props => {
           </div>
           <ul>
             <li><Link to='/item'><Icon icon='sidebarSummary'/> 数据总览</Link></li>
-            <li><Link to='/tag/create'><Icon icon='sidebarChart'/> 统计图表</Link></li>
+            <li><Link to='/item/chart'><Icon icon='sidebarChart'/> 统计图表</Link></li>
             <li><Link to='/tag/update'><Icon icon='sidebarExport'/> 导出数据</Link></li>
             <li><Link to='/item'><Icon icon='sidebarNotify'/> 记账提醒</Link></li>
           </ul>

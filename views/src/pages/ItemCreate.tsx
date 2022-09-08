@@ -9,7 +9,7 @@ import { DatePicker } from '~/components/DatePicker';
 import { FormItem } from '~/components/Form';
 import { showDialog } from '~/components/Dialog';
 
-import { formatDate } from '~/utils/date';
+import { formatDate, toSeconds } from '~/utils/date';
 import { showEmoji } from '~/hooks/useEmoji';
 import { getTags, TagsResponse, AccountType } from '~/service/tags';
 import { createItem } from '~/service/items';
@@ -79,7 +79,7 @@ export const ItemCreate: React.FC = () => {
       name: formData.tag.name,
       tag_id: formData.tag.id,
       category: formData.category,
-      date: `${Math.floor(new Date(formData.date).getTime() / 1000)}`,
+      date: `${toSeconds(formData.date)}`,
       amount: parseFloat(formData.amount) * 100,
       note: formData.note,
     }));

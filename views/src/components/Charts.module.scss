@@ -1,3 +1,5 @@
+@use "sass:list";
+
 @import '~/assets/styles/tools.scss';
 
 .form_wrap {
@@ -22,6 +24,10 @@
     width: 56px;
     height: 56px;
     margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
   }
   &_item {
     display: flex;
@@ -36,13 +42,20 @@
     height: 16px;
     border-radius: 8px;
     overflow: hidden;
-    background: #CCCCCC;
     > span {
       width: 0;
       height: 100%;
       transition: width 0.5s linear;
       display: block;
       border-radius: 8px;
+    }
+  }
+  $bgColors: (#ABC9FF, #C3E5AE, #FFB4B4, #B2A4FF);
+  @for $index from 1 through 4 {
+    &:nth-child(#{$index}n) {
+      .bar_chart_progress {
+        background: list.nth($bgColors, $index);
+      }
     }
   }
 }

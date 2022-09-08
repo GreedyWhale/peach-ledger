@@ -6,7 +6,7 @@ import { DateTabsLayout } from '~/components/DateTabsLayout';
 
 import { showEmoji } from '~/hooks/useEmoji';
 import { getItems, deleteItem } from '~/service/items';
-import { formatDate } from '~/utils/date';
+import { formatDate, toSeconds } from '~/utils/date';
 import useSwipe from '~/hooks/useSwipe';
 
 export const ItemList: React.FC = () => (
@@ -50,8 +50,8 @@ const Item: React.FC<{ date: string[]; }> = props => {
     const abortController = new AbortController();
     getItems({
       page,
-      start_date: `${Math.floor(new Date(props.date[0]).getTime() / 1000)}`,
-      end_date: `${Math.floor(new Date(props.date[1]).getTime() / 1000)}`,
+      start_date: `${toSeconds(props.date[0])}`,
+      end_date: `${toSeconds(props.date[1])}`,
     }, abortController.signal).then(res => {
       if (abort) {
         return;

@@ -52,6 +52,8 @@ export const getItems = (params: {
   page: number;
   start_date: string;
   end_date: string;
+  /** ASC: 小 -> 大， DESC: 大 -> 小 */
+  sort?: 'ASC' | 'DESC';
 }, signal?: AbortSignal) => request.get<ItemsListResponse, Response<ItemsListResponse>>(apiItems, { params, signal });
 
 export const deleteItem = (id: number) => request.delete(`${apiItems}/${id}`);

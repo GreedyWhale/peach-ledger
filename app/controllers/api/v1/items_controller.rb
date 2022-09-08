@@ -17,11 +17,14 @@ class Api::V1::ItemsController < ApplicationController
 
   def index
     user_id = request.env['user'].id
+    page = params[:page].to_i || 1
+    sort = params[:sort]
     items = Item
       .where(user_id: user_id)
       .where(date: Time.at(params[:start_date].to_i)..Time.at(params[:end_date].to_i))
-      .page(params[:page] || 1)
-    paginated_items = items.page(params[:page] || 1)
+
+    paginated_items = page === -1 ? items.page(1).per(items.count) : items.page(page)
+
     total_expenses = []
     total_income = []
     items.each do |item|
@@ -33,7 +36,7 @@ class Api::V1::ItemsController < ApplicationController
     end
 
     send_response({
-        items: paginated_items,
+        items: sort ? paginated_items.order("date #{sort}") : paginated_items,
         balance: {
           total_expenses: total_expenses.sum(&:amount),
           total_income: total_income.sum(&:amount)

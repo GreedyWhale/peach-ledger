@@ -1,5 +1,5 @@
 import React from 'react';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { useImmer } from 'use-immer';
 
 import styles from './DateTabsLayout.module.scss';

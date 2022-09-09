@@ -35,7 +35,7 @@ services:
     image: nginx:latest
     container_name: peach-ledger.nginx
     ports:
-      - "3001:80"
+      - "3001:3001"
     volumes:
       - "./nginx.conf:/etc/nginx/conf.d/default.conf"
       - "./views/dist:/usr/share/nginx/html"

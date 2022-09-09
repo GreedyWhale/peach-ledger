@@ -7,7 +7,7 @@ import { showDialog } from '~/components/Dialog';
 import { Icon } from '~/components/Icon';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:3000',
+  baseURL: import.meta.env.PROD ? '' : 'http://127.0.0.1:3000',
   timeout: 30000,
   showErrorDialog: true,
 });

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Items API</title>
+    <meta charset="utf-8">
+    <style>
+      
+body {
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  color: #404040;
+}
+
+.container {
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  zoom: 1;
+}
+
+pre {
+  background-color: #f5f5f5;
+  display: block;
+  padding: 8.5px;
+  margin: 0 0 18px;
+  line-height: 18px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+td.required .name:after {
+  float: right;
+  content: "required";
+  font-weight: normal;
+  color: #F08080;
+}
+
+a{
+  color: #0069d6;
+  text-decoration: none;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #404040;
+}
+
+h1 {
+  margin-bottom: 18px;
+  font-size: 30px;
+  line-height: 36px;
+}
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+}
+h3{
+  font-size: 18px;
+  line-height: 36px;
+}
+h4 {
+  font-size: 16px;
+  line-height: 36px;
+}
+
+table{
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 0;
+  border-collapse: separate;
+  font-size: 13px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+}
+
+table th {
+  padding-top: 9px;
+  font-weight: bold;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+}
+table th+th, table td+td {
+  border-left: 1px solid #ddd;
+}
+table th, table td {
+  padding: 10px 10px 9px;
+  line-height: 18px;
+  text-align: left;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Items API</h1>
+
+        <p class="explanation">账目的增、删、改、查</p>
+
+      <div class="article">
+        <h2>获取账目信息</h2>
+        <h3>GET /api/v1/items</h3>
+
+          <h3>Parameters</h3>
+          <table class="parameters table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="required">
+                    <span class="name">start_date</span>
+                </td>
+                <td>
+                  <span class="description">起始日期，秒数</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="required">
+                    <span class="name">end_date</span>
+                </td>
+                <td>
+                  <span class="description">结束日期，秒数</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="required">
+                    <span class="name">page</span>
+                </td>
+                <td>
+                  <span class="description">页数</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">sort</span>
+                </td>
+                <td>
+                  <span class="description">日期排序, ASC: 小 -&gt; 大， DESC: 大 -&gt; 小</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Response Fields</h3>
+          <table class="response-fields table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    <span class="name">items[id]</span>
+                </td>
+                <td>
+                  <span class="description">id</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[name]</span>
+                </td>
+                <td>
+                  <span class="description">账目名称</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[note]</span>
+                </td>
+                <td>
+                  <span class="description">账目备注</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[category]</span>
+                </td>
+                <td>
+                  <span class="description">类型，可能的值有：&quot;expenses&quot;、&quot;income&quot;</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[amount]</span>
+                </td>
+                <td>
+                  <span class="description">金额（分）</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[user_id]</span>
+                </td>
+                <td>
+                  <span class="description">创建用户id</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[tag_id]</span>
+                </td>
+                <td>
+                  <span class="description">标签id</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[date]</span>
+                </td>
+                <td>
+                  <span class="description">账目日期</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[updated_at]</span>
+                </td>
+                <td>
+                  <span class="description">更新时间</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">items[created_at]</span>
+                </td>
+                <td>
+                  <span class="description">创建时间</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">pagination[total_pages]</span>
+                </td>
+                <td>
+                  <span class="description">总页数</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">pagination[current_page]</span>
+                </td>
+                <td>
+                  <span class="description">当前页数</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">pagination[prev_page]</span>
+                </td>
+                <td>
+                  <span class="description">上一页的页数</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">pagination[next_page]</span>
+                </td>
+                <td>
+                  <span class="description">下一页的页数</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">pagination[first_page]</span>
+                </td>
+                <td>
+                  <span class="description">是否第一页</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <span class="name">pagination[last_page]</span>
+                </td>
+                <td>
+                  <span class="description">是否最后一页</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Request</h3>
+
+            <h4>Headers</h4>
+            <pre class="request headers">Version: HTTP/1.0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozMzAsImV4cCI6MTY2MzMxMjIwMn0.mwi6DFf1dtDR4IhbAt2QVZ7Uu27DNkF8zCIB_51tgpQ
+Accept: application/json
+Content-Type: application/json
+Host: example.org
+Cookie: </pre>
+
+          <h4>Route</h4>
+          <pre class="request route highlight">GET /api/v1/items?start_date=1662621002&amp;end_date=1662793802&amp;page=1</pre>
+
+            <h4>Query Parameters</h4>
+            <pre class="request query_parameters highlight">start_date: 1662621002
+end_date: 1662793802
+page: 1</pre>
+
+
+
+            <h3>Response</h3>
+              <h4>Headers</h4>
+              <pre class="response headers">X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 0
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: strict-origin-when-cross-origin
+Content-Type: application/json; charset=utf-8
+Vary: Accept, Accept-Encoding, Origin
+ETag: W/&quot;4693642751e523049087349aef694a0f&quot;
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: f708a283-f407-40ee-b352-92fe9ee6d44f
+X-Runtime: 0.010941
+Content-Length: 2380</pre>
+            <h4>Status</h4>
+            <pre class="response status">200 OK</pre>
+              <h4>Body</h4>
+              <pre class="response body">{
+  &quot;data&quot;: {
+    &quot;items&quot;: [
+      {
+        &quot;id&quot;: 798,
+        &quot;name&quot;: &quot;测试&quot;,
+        &quot;note&quot;: &quot;这是一个测试账目&quot;,
+        &quot;category&quot;: &quot;expenses&quot;,
+        &quot;amount&quot;: 1000,
+        &quot;user_id&quot;: 330,
+        &quot;tag_id&quot;: 657,
+        &quot;created_at&quot;: &quot;2022-09-09T07:10:02.608Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.608Z&quot;,
+        &quot;date&quot;: &quot;2022-09-09T07:10:02.597Z&quot;,
+        &quot;tags&quot;: {
+          &quot;id&quot;: 657,
+          &quot;name&quot;: &quot;接口测试&quot;,
+          &quot;emoji&quot;: [
+            &quot;1F359&quot;
+          ],
+          &quot;category&quot;: &quot;expenses&quot;,
+          &quot;deleted&quot;: false,
+          &quot;created_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;user_id&quot;: 330
+        }
+      },
+      {
+        &quot;id&quot;: 799,
+        &quot;name&quot;: &quot;测试&quot;,
+        &quot;note&quot;: &quot;这是一个测试账目&quot;,
+        &quot;category&quot;: &quot;expenses&quot;,
+        &quot;amount&quot;: 1000,
+        &quot;user_id&quot;: 330,
+        &quot;tag_id&quot;: 657,
+        &quot;created_at&quot;: &quot;2022-09-09T07:10:02.613Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.613Z&quot;,
+        &quot;date&quot;: &quot;2022-09-09T07:10:02.612Z&quot;,
+        &quot;tags&quot;: {
+          &quot;id&quot;: 657,
+          &quot;name&quot;: &quot;接口测试&quot;,
+          &quot;emoji&quot;: [
+            &quot;1F359&quot;
+          ],
+          &quot;category&quot;: &quot;expenses&quot;,
+          &quot;deleted&quot;: false,
+          &quot;created_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;user_id&quot;: 330
+        }
+      },
+      {
+        &quot;id&quot;: 800,
+        &quot;name&quot;: &quot;测试&quot;,
+        &quot;note&quot;: &quot;这是一个测试账目&quot;,
+        &quot;category&quot;: &quot;expenses&quot;,
+        &quot;amount&quot;: 1000,
+        &quot;user_id&quot;: 330,
+        &quot;tag_id&quot;: 657,
+        &quot;created_at&quot;: &quot;2022-09-09T07:10:02.615Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.615Z&quot;,
+        &quot;date&quot;: &quot;2022-09-09T07:10:02.614Z&quot;,
+        &quot;tags&quot;: {
+          &quot;id&quot;: 657,
+          &quot;name&quot;: &quot;接口测试&quot;,
+          &quot;emoji&quot;: [
+            &quot;1F359&quot;
+          ],
+          &quot;category&quot;: &quot;expenses&quot;,
+          &quot;deleted&quot;: false,
+          &quot;created_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;user_id&quot;: 330
+        }
+      },
+      {
+        &quot;id&quot;: 801,
+        &quot;name&quot;: &quot;测试&quot;,
+        &quot;note&quot;: &quot;这是一个测试账目&quot;,
+        &quot;category&quot;: &quot;expenses&quot;,
+        &quot;amount&quot;: 1000,
+        &quot;user_id&quot;: 330,
+        &quot;tag_id&quot;: 657,
+        &quot;created_at&quot;: &quot;2022-09-09T07:10:02.616Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.616Z&quot;,
+        &quot;date&quot;: &quot;2022-09-09T07:10:02.616Z&quot;,
+        &quot;tags&quot;: {
+          &quot;id&quot;: 657,
+          &quot;name&quot;: &quot;接口测试&quot;,
+          &quot;emoji&quot;: [
+            &quot;1F359&quot;
+          ],
+          &quot;category&quot;: &quot;expenses&quot;,
+          &quot;deleted&quot;: false,
+          &quot;created_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;user_id&quot;: 330
+        }
+      },
+      {
+        &quot;id&quot;: 802,
+        &quot;name&quot;: &quot;测试&quot;,
+        &quot;note&quot;: &quot;这是一个测试账目&quot;,
+        &quot;category&quot;: &quot;expenses&quot;,
+        &quot;amount&quot;: 1000,
+        &quot;user_id&quot;: 330,
+        &quot;tag_id&quot;: 657,
+        &quot;created_at&quot;: &quot;2022-09-09T07:10:02.618Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.618Z&quot;,
+        &quot;date&quot;: &quot;2022-09-09T07:10:02.617Z&quot;,
+        &quot;tags&quot;: {
+          &quot;id&quot;: 657,
+          &quot;name&quot;: &quot;接口测试&quot;,
+          &quot;emoji&quot;: [
+            &quot;1F359&quot;
+          ],
+          &quot;category&quot;: &quot;expenses&quot;,
+          &quot;deleted&quot;: false,
+          &quot;created_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;updated_at&quot;: &quot;2022-09-09T07:10:02.591Z&quot;,
+          &quot;user_id&quot;: 330
+        }
+      }
+    ],
+    &quot;balance&quot;: {
+      &quot;total_expenses&quot;: 5000,
+      &quot;total_income&quot;: 0
+    },
+    &quot;pagination&quot;: {
+      &quot;total_pages&quot;: 1,
+      &quot;current_page&quot;: 1,
+      &quot;prev_page&quot;: null,
+      &quot;next_page&quot;: null,
+      &quot;first_page&quot;: true,
+      &quot;last_page&quot;: true
+    }
+  },
+  &quot;message&quot;: &quot;请求成功&quot;,
+  &quot;status&quot;: 200,
+  &quot;errors&quot;: null
+}</pre>
+      </div>
+    </div>
+  </body>
+</html>

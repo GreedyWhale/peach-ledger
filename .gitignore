@@ -60,3 +60,4 @@ dist-ssr
 /config/credentials/environment.key
 
 /doc
+/config/credentials/production.key

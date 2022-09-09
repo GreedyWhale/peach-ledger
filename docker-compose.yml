@@ -20,9 +20,9 @@ services:
       && bundle config mirror.https://rubygems.org https://gems.ruby-china.com
       && gem update --system
       && gem install rails bundler
-      && RAILS_ENV=production bin/rails s -p 3001"
+      && RAILS_ENV=production bin/rails s -p 3002"
     ports:
-      - "3001:3001"
+      - "3002:3002"
     volumes:
       - ".:/code"
       - "/home/peach/.ssh:/root/.ssh"

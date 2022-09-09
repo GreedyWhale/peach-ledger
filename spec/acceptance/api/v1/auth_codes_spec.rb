@@ -9,7 +9,7 @@ resource "Auth Codes" do
   parameter :scene, "验证码类型：signIn", type: :string, enum: ['signIn']
 
   post "/api/v1/auth_codes" do
-    let(:email) { '383911973@qq.com' }
+    let(:email) { Rails.application.credentials[:admin_account] }
     let(:scene) { 'signIn' }
     # :document => false 表示这个用例只测试不生成文档
     example "请求参数必须携带 email", :document => false do

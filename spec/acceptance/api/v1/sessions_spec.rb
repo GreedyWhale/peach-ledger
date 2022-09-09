@@ -9,8 +9,8 @@ resource "Sessions" do
   parameter :code, "验证码", required: true, type: :string
 
   post "/api/v1/sessions" do
-    let(:email) { 'test@qq.com' }
-    let(:code) { '123456' }
+    let(:email) { Rails.application.credentials[:admin_account] }
+    let(:code) { Rails.application.credentials[:admin_key] }
 
     example "创建会话" do
       do_request

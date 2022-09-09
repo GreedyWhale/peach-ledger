@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "pack": "../bin/pack.sh",
+    "dist": "../bin/pack.sh",
     "deploy": "ssh peach@taurus 'bash -s' < bin/deploy.sh"
   },
   "dependencies": {

@@ -90,6 +90,8 @@ test:
 #
 production:
   <<: *default
-  database: peach_ledger_production
-  username: peach_ledger
-  password: <%= ENV["PEACH_LEDGER_DATABASE_PASSWORD"] %>
+  database: <%= ENV['PROD_POSTGRES_DB'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: peach-ledger.bd
+  port: 5432

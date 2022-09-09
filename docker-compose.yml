@@ -14,6 +14,7 @@ services:
     image: ruby:3.1.2
     container_name: peach-legder.back_end
     working_dir: /code
+    entrypoint: /code/docker-entrypoint.sh
     command: >
       sh -c "./bin/wait-for-if.sh db:5432
       && gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/

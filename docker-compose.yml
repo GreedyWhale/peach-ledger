@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:latest
+    container_name: peach-legder.postgres
+    volumes:
+      - "../peach-ledger-data:/var/lib/postgresql/data"
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env.database
+
+  back_end:
+    image: ruby:3.1.2
+    container_name: peach-legder.back_end
+    working_dir: /code
+    command: >
+      sh -c "./bin/wait-for-if.sh db:5432 -- corepack enable
+      && gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+      && bundle config mirror.https://rubygems.org https://gems.ruby-china.com
+      && gem update --system
+      && gem install rails bundler
+      && RAILS_ENV=production bin/rails s -p 3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ".:/code"
+      - "/home/peach/.ssh:/root/.ssh"
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    container_name: peach-ledger.nginx
+    ports:
+      - "3001:3001"
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+      - "./views/dist:/usr/share/nginx/html"
+      - "/usr/local/nginx/cert:/usr/share/nginx/cert"
+    depends_on:
+      - back_end

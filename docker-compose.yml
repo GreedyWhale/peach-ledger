@@ -20,6 +20,7 @@ services:
       && bundle config mirror.https://rubygems.org https://gems.ruby-china.com
       && gem update --system
       && gem install rails bundler
+      && bundle install
       && RAILS_ENV=production bin/rails s -p 3002"
     ports:
       - "3002:3002"

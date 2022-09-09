@@ -15,7 +15,7 @@ services:
     container_name: peach-legder.back_end
     working_dir: /code
     command: >
-      sh -c "./bin/wait-for-if.sh db:5432 -- corepack enable
+      sh -c "./bin/wait-for-if.sh db:5432
       && gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
       && bundle config mirror.https://rubygems.org https://gems.ruby-china.com
       && gem update --system

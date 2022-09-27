@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "deploy": "ssh peach@taurus 'bash -s' < bin/deploy.sh"
+  },
   "dependencies": {
     "http-server": "^14.1.1"
   }

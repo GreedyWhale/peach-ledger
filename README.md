@@ -19,7 +19,7 @@ Ruby on Rails、 React、 Docker、TypeScript
 3. Rails 虽然强大，但是文档实在很难看，教程和资料年代久远导致 Google 编程大法失效 80%
 4. 设计 + 配色能力急需提升
 
-预览地址为：https://peach.greed.icu:3001/
+预览地址为：https://peach.greed.icu
 
 因为备案的原因，不能开放注册，想要体验完整功能，可以发邮件给我 383911973@qq.com 👈
 

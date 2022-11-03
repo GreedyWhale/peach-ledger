@@ -15,7 +15,7 @@ services:
     container_name: peach-legder.back_end
     working_dir: /code
     command: >
-      sh -c "./bin/wait-for-if.sh db:5432
+      sh -c "./bin/wait-for-if.sh peach-legder.postgres:5432
       && rm -f tmp/pids/server.pid
       && gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
       && bundle config mirror.https://rubygems.org https://gems.ruby-china.com

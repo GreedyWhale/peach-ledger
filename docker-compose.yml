@@ -4,7 +4,7 @@ services:
     image: postgres:latest
     container_name: peach-legder.postgres
     volumes:
-      - "../peach-ledger-data:/var/lib/postgresql/data"
+      - "../database/peach-ledger:/var/lib/postgresql/data"
     ports:
       - "5433:5432"
     env_file:
@@ -22,9 +22,9 @@ services:
       && gem update --system
       && gem install rails bundler
       && bundle install
-      && RAILS_ENV=production bin/rails s -p 3002"
+      && RAILS_ENV=production bin/rails s -p 3001"
     ports:
-      - "3002:3002"
+      - "3001:3001"
     volumes:
       - ".:/code"
       - "/home/peach/.ssh:/root/.ssh"
@@ -35,10 +35,15 @@ services:
     image: nginx:latest
     container_name: peach-ledger.nginx
     ports:
-      - "3001:443"
+      - "8081:80"
     volumes:
       - "./nginx.conf:/etc/nginx/conf.d/default.conf"
       - "./views/dist:/usr/share/nginx/html"
       - "/usr/local/nginx/cert:/usr/share/nginx/cert"
     depends_on:
       - back_end
+
+networks:
+  default:
+    external:
+      name: greed-apps-network

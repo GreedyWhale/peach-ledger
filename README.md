@@ -23,4 +23,12 @@ Ruby on Rails、 React、 Docker、TypeScript
 
 因为备案的原因，不能开放注册，想要体验完整功能，可以发邮件给我 383911973@qq.com 👈
 
+## 备忘
+
+首次部署需要执行：
+
+```
+RAILS_ENV=production bin/rails db:create
+RAILS_ENV=production bin/rails db:migrate
+```
 👋
